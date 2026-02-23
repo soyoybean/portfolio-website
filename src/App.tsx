@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { KeyboardEvent } from 'react'
 import './App.css'
 
 type Theme = 'light' | 'dark'
@@ -23,6 +24,8 @@ type Project = {
   caseStudyUrl: string
 }
 
+type NavKey = 'home' | 'work' | 'about' | 'contact'
+
 const THEME_STORAGE_KEY = 'portfolio-theme'
 
 const pillars: Pillar[] = [
@@ -42,7 +45,7 @@ const pillars: Pillar[] = [
   {
     key: 'systems',
     icon: 'network',
-    title: 'Systems Thinking & Communication',
+    title: 'Systems Thinking & Modeling',
     description:
       'Building accessible tools and practices that center marginalized voices',
   },
@@ -104,6 +107,19 @@ const projects: Project[] = [
 function App() {
   const [theme, setTheme] = useState<Theme>('light')
   const [isNavOpen, setIsNavOpen] = useState(false)
+  const [activeNav, setActiveNav] = useState<NavKey>('home')
+  const [selectedPillar, setSelectedPillar] = useState<PillarKey>('robotics')
+  const [showAllPillars, setShowAllPillars] = useState(false)
+  const [selectedProjectByPillar, setSelectedProjectByPillar] = useState<Record<PillarKey, string>>(() =>
+    pillars.reduce(
+      (map, pillar) => {
+        const firstProjectId = projects.find((project) => project.pillar === pillar.key)?.id ?? ''
+        map[pillar.key] = firstProjectId
+        return map
+      },
+      {} as Record<PillarKey, string>,
+    ),
+  )
 
   useEffect(() => {
     try {
@@ -142,6 +158,82 @@ function App() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    const updateActiveSection = () => {
+      const getAbsoluteTop = (element: HTMLElement) => window.scrollY + element.getBoundingClientRect().top
+      const header = document.querySelector('.site-header') as HTMLElement | null
+      const headerHeight = header?.offsetHeight ?? 0
+
+      if (window.scrollY <= 8) {
+        setActiveNav('home')
+        return
+      }
+
+      const homeSection = document.getElementById('home') as HTMLElement | null
+      const workSection = document.getElementById('work') as HTMLElement | null
+      const aboutSection = document.getElementById('about') as HTMLElement | null
+      const contactSection = document.getElementById('contact') as HTMLElement | null
+      const workTitle = document.getElementById('impact-anchor') as HTMLElement | null
+      const aboutTitle = document.getElementById('about-home-title') as HTMLElement | null
+      const contactTitle = document.getElementById('contact-home-title') as HTMLElement | null
+
+      if (
+        !homeSection ||
+        !workSection ||
+        !aboutSection ||
+        !contactSection ||
+        !workTitle ||
+        !aboutTitle ||
+        !contactTitle
+      ) {
+        return
+      }
+
+      const sections: Array<{
+        key: NavKey
+        section: HTMLElement
+        title: HTMLElement
+      }> = [
+        {
+          key: 'home',
+          section: homeSection,
+          title: (document.getElementById('hero-title') as HTMLElement | null) ?? homeSection,
+        },
+        { key: 'work', section: workSection, title: workTitle },
+        { key: 'about', section: aboutSection, title: aboutTitle },
+        { key: 'contact', section: contactSection, title: contactTitle },
+      ]
+
+      let nextActive: NavKey = 'home'
+      for (let index = 0; index < sections.length - 1; index += 1) {
+        const current = sections[index]
+        const upcoming = sections[index + 1]
+        const currentTop = getAbsoluteTop(current.section)
+        const currentHeight = Math.max(current.section.offsetHeight, 1)
+        const upcomingTitleTop = getAbsoluteTop(upcoming.title)
+        const majorityPassedThreshold = currentTop + currentHeight * 0.55
+        const upcomingTitleVisibleThreshold = upcomingTitleTop - (headerHeight + 16)
+        const transitionThreshold = Math.max(majorityPassedThreshold, upcomingTitleVisibleThreshold)
+
+        if (window.scrollY >= transitionThreshold) {
+          nextActive = upcoming.key
+        } else {
+          break
+        }
+      }
+
+      setActiveNav((current) => (current === nextActive ? current : nextActive))
+    }
+
+    updateActiveSection()
+    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    window.addEventListener('resize', updateActiveSection)
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection)
+      window.removeEventListener('resize', updateActiveSection)
+    }
+  }, [])
+
   const projectsByPillar = useMemo(
     () =>
       pillars
@@ -152,6 +244,78 @@ function App() {
         .filter((group) => group.items.length > 0),
     [],
   )
+
+  const selectedPillarGroup =
+    projectsByPillar.find((group) => group.pillar.key === selectedPillar) ?? projectsByPillar[0]
+
+  const selectedProject = selectedPillarGroup?.items.find(
+    (project) => project.id === selectedProjectByPillar[selectedPillarGroup.pillar.key],
+  )
+
+  const themeLabel = theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'
+
+  const smoothScrollToTarget = (targetId: string, navKey: NavKey) => {
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const target = document.getElementById(targetId)
+    if (!target) {
+      return
+    }
+
+    const header = document.querySelector('.site-header') as HTMLElement | null
+    const offset = (header?.offsetHeight ?? 0) + 12
+    const targetTop = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset)
+
+    setActiveNav(navKey)
+    window.scrollTo({
+      top: targetTop,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
+    window.history.replaceState(null, '', `#${targetId}`)
+  }
+
+  const scrollToActiveProjectModule = () => {
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    requestAnimationFrame(() => {
+      const impactHeading = document.getElementById('impact-anchor')
+      if (!impactHeading) {
+        return
+      }
+
+      const header = document.querySelector('.site-header') as HTMLElement | null
+      const offset = (header?.offsetHeight ?? 0) + 24
+      const targetTop = window.scrollY + impactHeading.getBoundingClientRect().top - offset
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      })
+    })
+  }
+
+  const setPillar = (pillarKey: PillarKey, shouldScroll = true) => {
+    setShowAllPillars(false)
+    setSelectedPillar(pillarKey)
+    if (shouldScroll) {
+      scrollToActiveProjectModule()
+    }
+  }
+
+  const toggleSeeAllPillars = () => {
+    setShowAllPillars((current) => {
+      const next = !current
+      if (!next) {
+        setSelectedPillar('robotics')
+      }
+      return next
+    })
+    scrollToActiveProjectModule()
+  }
 
   const toggleTheme = () => {
     setTheme((current) => (current === 'light' ? 'dark' : 'light'))
@@ -165,18 +329,74 @@ function App() {
     setIsNavOpen(false)
   }
 
-  const scrollToSection = (id: string) => {
-    closeNav()
-    const target = document.getElementById(id)
-    if (target) {
-      const reduceMotion =
-        typeof window.matchMedia === 'function' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
-    }
+  const selectPillarProject = (pillarKey: PillarKey, projectId: string) => {
+    setSelectedProjectByPillar((current) => ({
+      ...current,
+      [pillarKey]: projectId,
+    }))
   }
 
-  const themeLabel = theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'
+  const onPillarKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentKey: PillarKey) => {
+    const keys = pillars.map((pillar) => pillar.key)
+    const currentIndex = keys.indexOf(currentKey)
+    if (currentIndex < 0) {
+      return
+    }
+
+    let nextIndex = currentIndex
+
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = (currentIndex + 1) % keys.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (currentIndex - 1 + keys.length) % keys.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = keys.length - 1
+    } else {
+      return
+    }
+
+    event.preventDefault()
+    const nextKey = keys[nextIndex]
+    setPillar(nextKey)
+    requestAnimationFrame(() => {
+      document.getElementById(`pillar-tab-${nextKey}`)?.focus()
+    })
+  }
+
+  const onProjectKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentProjectId: string) => {
+    if (!selectedPillarGroup) {
+      return
+    }
+
+    const projectIds = selectedPillarGroup.items.map((project) => project.id)
+    const currentIndex = projectIds.indexOf(currentProjectId)
+    if (currentIndex < 0) {
+      return
+    }
+
+    let nextIndex = currentIndex
+
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = (currentIndex + 1) % projectIds.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (currentIndex - 1 + projectIds.length) % projectIds.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = projectIds.length - 1
+    } else {
+      return
+    }
+
+    event.preventDefault()
+    const nextProjectId = projectIds[nextIndex]
+    selectPillarProject(selectedPillarGroup.pillar.key, nextProjectId)
+    requestAnimationFrame(() => {
+      document.getElementById(`project-tab-${nextProjectId}`)?.focus()
+    })
+  }
 
   return (
     <div className="page-shell" id="top">
@@ -197,16 +417,57 @@ function App() {
               className={`primary-nav ${isNavOpen ? 'is-open' : ''}`}
               aria-label="Primary"
             >
-              <a href="#top" onClick={closeNav}>
+              <a
+                href="#top"
+                className={activeNav === 'home' ? 'is-active' : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  smoothScrollToTarget('top', 'home')
+                  closeNav()
+                }}
+              >
                 Home
               </a>
-              <a href="#work" onClick={closeNav}>
+              <a
+                href="#impact-anchor"
+                className={activeNav === 'work' ? 'is-active' : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  smoothScrollToTarget('impact-anchor', 'work')
+                  closeNav()
+                }}
+              >
                 Work
               </a>
-              <a href="#about" onClick={closeNav}>
-                About
+              <a
+                href="#about-home-title"
+                className={activeNav === 'about' ? 'is-active' : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  smoothScrollToTarget('about-home-title', 'about')
+                  closeNav()
+                }}
+              >
+                About Me
               </a>
-              <a href="#contact" onClick={closeNav}>
+              <a
+                href="/artifacts/SoyonKim_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-no-highlight"
+                onClick={closeNav}
+              >
+                Resume
+              </a>
+              <a
+                href="#contact-home-title"
+                className={activeNav === 'contact' ? 'is-active' : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  smoothScrollToTarget('contact-home-title', 'contact')
+                  closeNav()
+                }}
+              >
                 Contact
               </a>
             </nav>
@@ -245,142 +506,289 @@ function App() {
           <div className="hero-stage">
             <div className="container hero-layout">
               <div className="hero-copy">
-                <p className="hero-greeting">Hello,</p>
-                <h1 id="hero-title">I&apos;m Soyon Kim,</h1>
-                <p className="hero-titleline">Human-centered UX Design Researcher</p>
-                <p className="hero-subline">
-                  My goal is to build trustworthy, responsible systems that support human wellbeing and agency.
-                </p>
-                <p className="hero-rings">
-                  Human-Centered · Real-World Deployment · Responsible Systems · Healthtech
-                </p>
-                <div className="hero-actions">
-                  <a className="hero-btn hero-btn-secondary" href="/artifacts/SoyonKim_Resume.txt" download>
-                    Download Resume
-                  </a>
+                <div className="hero-intro">
+                  <p className="hero-greeting">Hello,</p>
+                  <h1 id="hero-title">I&apos;m Soyon Kim,</h1>
+                  <p className="hero-titleline">Human-centered UX Design Researcher</p>
+                  <p className="hero-subline">
+                    My goal is to build trustworthy, responsible systems that support human wellbeing and agency.
+                  </p>
                 </div>
               </div>
               <div className="hero-portrait">
                 <img src="/soyon-portrait.png" alt="Portrait of Soyon Kim" loading="eager" decoding="async" />
               </div>
             </div>
-
-            <div className="container pillar-cta-block">
-              <p className="pillar-lead">See how I achieve impact:</p>
-              <div className="pillar-cta-grid" aria-label="Research pillars">
-                {pillars.map((pillar) => (
-                  <button
-                    key={pillar.key}
-                    type="button"
-                    className="pillar-cta"
-                    onClick={() => scrollToSection(`pillar-${pillar.key}`)}
-                    aria-controls={`pillar-${pillar.key}`}
-                  >
-                    <div className="pillar-heading-row">
-                      <span className="pillar-icon-circle">
-                        <PillarIcon icon={pillar.icon} />
-                      </span>
-                      <span className="pillar-title">{pillar.title}</span>
-                    </div>
-                    <span className="pillar-description">{pillar.description}</span>
-                    <span className="pillar-explore" aria-hidden="true">
-                      Explore →
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
-        <section id="work" className="section work" aria-label="Projects by research pillar">
-          <div className="container">
-            {projectsByPillar.map(({ pillar, items }) => (
-              <section
-                key={pillar.key}
-                id={`pillar-${pillar.key}`}
-                className="pillar-section"
-                aria-labelledby={`pillar-heading-${pillar.key}`}
-              >
-                <header className="pillar-header">
-                  <span className="pillar-header-icon" aria-hidden="true">
-                    <PillarIcon icon={pillar.icon} />
-                  </span>
-                  <h2 id={`pillar-heading-${pillar.key}`}>{pillar.title}</h2>
-                </header>
-                <p className="pillar-intro">{pillar.description}</p>
+        <section id="work" className="section work" aria-labelledby="work-pillar-title">
+          <div className="container work-content">
+            <p id="impact-anchor" className="hero-transition">
+              My work spans across:
+            </p>
 
-                <div className="project-grid" role="list" aria-label={`${pillar.title} projects`}>
-                  {items.map((project) => (
-                    <article key={project.id} className="project-card" role="listitem">
+            <div id="pillar-selector" className="pillar-selector">
+              <div className="pillar-tablist" role="tablist" aria-label="Research pillars">
+                {pillars.map((pillar) => {
+                  const selected = !showAllPillars && pillar.key === selectedPillar
+                  return (
+                    <button
+                      key={pillar.key}
+                      id={`pillar-tab-${pillar.key}`}
+                      type="button"
+                      role="tab"
+                      className={`pillar-tab ${selected ? 'is-active' : ''}`}
+                      aria-selected={selected}
+                      aria-controls="pillar-content-panel"
+                      tabIndex={selected ? 0 : -1}
+                      onClick={() => setPillar(pillar.key)}
+                      onKeyDown={(event) => onPillarKeyDown(event, pillar.key)}
+                    >
+                      <span className="pillar-tab-icon" aria-hidden="true">
+                        <PillarIcon icon={pillar.icon} />
+                      </span>
+                      <span className="pillar-tab-label">{pillar.title}</span>
+                    </button>
+                  )
+                })}
+              </div>
+              <button
+                type="button"
+                className={`pillar-tab pillar-tab-see-all ${showAllPillars ? 'is-active' : ''}`}
+                aria-expanded={showAllPillars}
+                aria-controls="pillar-content-panel"
+                onClick={toggleSeeAllPillars}
+              >
+                {showAllPillars ? 'Collapse' : 'See all'}
+              </button>
+            </div>
+
+            {showAllPillars ? (
+              <section id="pillar-content-panel" className="pillar-content-panel" role="region" aria-label="All pillars">
+                {projectsByPillar.map((group) => (
+                  <section key={group.pillar.key} className="all-pillars-group">
+                    <h2>{group.pillar.title}</h2>
+                    <p className="pillar-intro">{group.pillar.description}</p>
+                    <div className="project-stack">
+                      {group.items.map((project) => (
+                        <a key={project.id} className="project-focus-card is-selected" href={project.caseStudyUrl}>
+                          <div className="project-focus-media">
+                            <img
+                              src={project.thumbnail}
+                              alt={`${project.title} preview`}
+                              loading="lazy"
+                              decoding="async"
+                              width={640}
+                              height={360}
+                            />
+                          </div>
+                          <div className="project-focus-content">
+                            <h3>{project.title}</h3>
+                            <p className="project-focus-summary">{project.subtitle}</p>
+                            <p className="meta-line meta-supports">
+                              <span className="meta-icon" aria-hidden="true">
+                                <MetaIcon type="supports" />
+                              </span>
+                              <span>
+                                <strong>Supports:</strong> {project.supports}
+                              </span>
+                            </p>
+                            <p className="meta-line meta-impact">
+                              <span className="meta-icon" aria-hidden="true">
+                                <MetaIcon type="impact" />
+                              </span>
+                              <span>
+                                <strong>Impact:</strong> {project.impact}
+                              </span>
+                            </p>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </section>
+            ) : selectedPillarGroup && selectedProject ? (
+              <section
+                id="pillar-content-panel"
+                key={selectedPillarGroup.pillar.key}
+                className="pillar-content-panel"
+                role="tabpanel"
+                aria-labelledby={`pillar-tab-${selectedPillarGroup.pillar.key}`}
+              >
+                <h2 id="work-pillar-title">{selectedPillarGroup.pillar.title}</h2>
+                <p className="pillar-intro">{selectedPillarGroup.pillar.description}</p>
+                <p className="project-tab-lead">See projects in this category:</p>
+
+                <div className="project-tabs" role="tablist" aria-label={`${selectedPillarGroup.pillar.title} projects`}>
+                  {selectedPillarGroup.items.map((project) => {
+                    const isSelected = project.id === selectedProject.id
+                    return (
+                      <button
+                        key={project.id}
+                        id={`project-tab-${project.id}`}
+                        type="button"
+                        role="tab"
+                        className={`project-tab ${isSelected ? 'is-active' : ''}`}
+                        aria-selected={isSelected}
+                        aria-controls={`project-panel-${selectedPillarGroup.pillar.key}`}
+                        tabIndex={isSelected ? 0 : -1}
+                        onClick={() => selectPillarProject(selectedPillarGroup.pillar.key, project.id)}
+                        onKeyDown={(event) => onProjectKeyDown(event, project.id)}
+                      >
+                        {project.title}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <div
+                  id={`project-panel-${selectedPillarGroup.pillar.key}`}
+                  className="project-tabpanel"
+                  role="tabpanel"
+                  aria-labelledby={`project-tab-${selectedProject.id}`}
+                >
+                  <a className="project-focus-card is-selected" href={selectedProject.caseStudyUrl}>
+                    <div className="project-focus-media">
                       <img
-                        className="project-thumb"
-                        src={project.thumbnail}
-                        alt={`${project.title} thumbnail preview`}
+                        src={selectedProject.thumbnail}
+                        alt={`${selectedProject.title} preview`}
                         loading="lazy"
                         decoding="async"
                         width={640}
                         height={360}
                       />
-
-                      <h3>{project.title}</h3>
-                      <p className="project-subtitle">{project.subtitle}</p>
-
-                      <p className="meta-line">
-                        <strong>Supports:</strong> {project.supports}
+                    </div>
+                    <div className="project-focus-content">
+                      <h3>{selectedProject.title}</h3>
+                      <p className="project-focus-summary">{selectedProject.subtitle}</p>
+                      <p className="meta-line meta-supports">
+                        <span className="meta-icon" aria-hidden="true">
+                          <MetaIcon type="supports" />
+                        </span>
+                        <span>
+                          <strong>Supports:</strong> {selectedProject.supports}
+                        </span>
                       </p>
                       <p className="meta-line meta-impact">
-                        <strong>Impact:</strong> {project.impact}
+                        <span className="meta-icon" aria-hidden="true">
+                          <MetaIcon type="impact" />
+                        </span>
+                        <span>
+                          <strong>Impact:</strong> {selectedProject.impact}
+                        </span>
                       </p>
-
-                      <div className="project-links">
-                        <a className="card-link card-link-secondary" href={project.caseStudyUrl}>
-                          Case Study <span aria-hidden="true">↗</span>
-                        </a>
-                      </div>
-                    </article>
-                  ))}
+                    </div>
+                  </a>
                 </div>
               </section>
-            ))}
+            ) : null}
           </div>
         </section>
 
-        <section id="about" className="anchor-only" aria-hidden="true" />
-
-        <section id="contact" className="section contact" aria-labelledby="contact-title">
-          <div className="container contact-layout">
-            <h2 id="contact-title">Contact</h2>
+        <section id="about" className="section about-home" aria-labelledby="about-home-title">
+          <div className="container about-home-layout">
+            <h2 id="about-home-title">About Me</h2>
             <p>
-              For opportunities, collaboration, or project questions, reach out directly by email or through my
-              professional profiles.
+              I am a human-centered UX Design Researcher focused on trustworthy AI, assistive robotics, and equitable
+              healthcare systems. My work combines qualitative depth with systems-level thinking to translate research
+              into practical, real-world impact.
             </p>
-
-            <ul className="social-list" aria-label="Social links">
+            <ul className="home-link-list" aria-label="Professional links">
               <li>
-                <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noreferrer noopener">
-                  <SocialIcon type="linkedin" />
+                <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer">
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://github.com/soyoybean" target="_blank" rel="noreferrer noopener">
-                  <SocialIcon type="github" />
+                <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer">
                   GitHub
                 </a>
               </li>
               <li>
-                <a href="mailto:soyonkim00@gmail.com">
-                  <SocialIcon type="gmail" />
-                  soyonkim00@gmail.com
+                <a href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                  Google Scholar
                 </a>
               </li>
             </ul>
+          </div>
+        </section>
 
-            <p className="domain-note">Production-ready deployment with custom domain support.</p>
+        <section id="contact" className="section contact-home" aria-labelledby="contact-home-title">
+          <div className="container contact-home-layout">
+            <h2 id="contact-home-title">Contact</h2>
+            <p>
+              For any questions, thoughts, or feedback, reach out via any of the following:
+            </p>
+            <ul className="social-list" aria-label="Contact links">
+              <li>
+                <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer">
+                  <FooterIcon type="linkedin" />
+                  <span>LinkedIn</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer">
+                  <FooterIcon type="github" />
+                  <span>GitHub</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FooterIcon type="scholar" />
+                  <span>Google Scholar</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </section>
       </main>
+
+      <footer className="site-footer" aria-labelledby="footer-quote">
+        <div className="container footer-layout">
+          <p id="footer-quote" className="footer-quote">
+            &quot;Despite everything, it&apos;s still you.&quot;
+          </p>
+
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <a href="#top">Home</a>
+            <a href="#impact-anchor">Work</a>
+            <a href="#about">About Me</a>
+            <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" className="nav-no-highlight">
+              Resume
+            </a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <ul className="footer-social" aria-label="External links">
+            <li>
+              <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <FooterIcon type="linkedin" />
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <FooterIcon type="github" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google Scholar"
+              >
+                <FooterIcon type="scholar" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </footer>
     </div>
   )
 }
@@ -417,11 +825,35 @@ function PillarIcon({ icon }: PillarIconProps) {
   )
 }
 
-type SocialIconProps = {
-  type: 'linkedin' | 'github' | 'gmail'
+type MetaIconProps = {
+  type: 'supports' | 'impact'
 }
 
-function SocialIcon({ type }: SocialIconProps) {
+type FooterIconProps = {
+  type: 'linkedin' | 'github' | 'scholar'
+}
+
+function MetaIcon({ type }: MetaIconProps) {
+  if (type === 'supports') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M16 19v-1.2A3.8 3.8 0 0 0 12.2 14H7.8A3.8 3.8 0 0 0 4 17.8V19" />
+        <circle cx="10" cy="8" r="3" />
+        <path d="M19 19v-1a3.2 3.2 0 0 0-2.4-3.1" />
+        <path d="M15.5 5.2a3 3 0 0 1 0 5.7" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m4 16 5-5 4 4 7-7" />
+      <path d="M16 8h4v4" />
+    </svg>
+  )
+}
+
+function FooterIcon({ type }: FooterIconProps) {
   if (type === 'linkedin') {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -440,8 +872,8 @@ function SocialIcon({ type }: SocialIconProps) {
 
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m4 7 8 6 8-6" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8.8 14.7c1.1 1.5 2.6 2.3 3.2 2.6M8.2 9.8h7.6M9.5 12h5.4M13.5 6.5c1.3 2 2 4 2 5.5s-.7 3.5-2 5.5" />
     </svg>
   )
 }
