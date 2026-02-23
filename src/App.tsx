@@ -6,7 +6,7 @@ type PillarKey = 'robotics' | 'ai' | 'systems'
 type PillarIconKey = 'heart' | 'brain' | 'network'
 
 type MetaItem = {
-  label: 'Supports' | 'My Role' | 'My Contribution' | 'Outcome & Impact'
+  label: 'Supports' | 'Role' | 'Methods' | 'Impact'
   value: string
 }
 
@@ -22,6 +22,7 @@ type Project = {
   pillar: PillarKey
   title: string
   subtitle: string
+  featured?: boolean
   meta: MetaItem[]
 }
 
@@ -55,6 +56,7 @@ const projects: Project[] = [
     id: 'flowguard-pain-relief-robotic-system',
     pillar: 'robotics',
     title: 'FlowGuard: Pain Relief Robotic System',
+    featured: true,
     subtitle:
       'Long-term assistive robotics for daily pain relief in at-home wheelchair use',
     meta: [
@@ -64,15 +66,15 @@ const projects: Project[] = [
           'People with quadriplegia, ALS, and other long-term wheelchair users',
       },
       {
-        label: 'My Role',
+        label: 'Role',
         value: 'UX Research Lead · Product Designer · Hardware Engineer',
       },
       {
-        label: 'My Contribution',
+        label: 'Methods',
         value: 'At-Home Interviews · Co-Design · Longitudinal User Testing',
       },
       {
-        label: 'Outcome & Impact',
+        label: 'Impact',
         value:
           '1+ Year In-Situ Deployment (12+ hrs/day) with reduced daily pain & caregiver burden',
       },
@@ -90,15 +92,15 @@ const projects: Project[] = [
         value: 'Students with disabilities navigating accommodation systems',
       },
       {
-        label: 'My Role',
+        label: 'Role',
         value: 'UX Researcher · Human-Centered AI Designer',
       },
       {
-        label: 'My Contribution',
+        label: 'Methods',
         value: 'Usability Testing · Think-Aloud Protocols · Iterative Design',
       },
       {
-        label: 'Outcome & Impact',
+        label: 'Impact',
         value:
           'Functional prototype with user evaluation, showing reduced cognitive & emotional load in drafting advocacy requests',
       },
@@ -117,15 +119,15 @@ const projects: Project[] = [
           'People with Mild Cognitive Impairment (PwMCI), caregivers, and neuropsychologists',
       },
       {
-        label: 'My Role',
+        label: 'Role',
         value: 'UX Designer · HRI Researcher',
       },
       {
-        label: 'My Contribution',
+        label: 'Methods',
         value: 'Literature Review · Human-Centered Design · Concept Evaluation',
       },
       {
-        label: 'Outcome & Impact',
+        label: 'Impact',
         value:
           'Conference Paper outlining design patterns for home-based assistive robots',
       },
@@ -139,13 +141,13 @@ const projects: Project[] = [
       'Transparency and protection research for creators in algorithmic content ecosystems',
     meta: [
       { label: 'Supports', value: 'Small Instagram artists (<10K followers)' },
-      { label: 'My Role', value: 'UX Researcher' },
+      { label: 'Role', value: 'UX Researcher' },
       {
-        label: 'My Contribution',
+        label: 'Methods',
         value: 'Contextual Interviews · Affinity Clustering · Cultural Modeling',
       },
       {
-        label: 'Outcome & Impact',
+        label: 'Impact',
         value:
           'Research report & design framework around 202 synthesized interpretation notes & design directions',
       },
@@ -163,13 +165,13 @@ const projects: Project[] = [
         value:
           'Patients, caregivers, and stakeholders navigating complex healthcare access systems',
       },
-      { label: 'My Role', value: 'Systems Designer · UX Researcher' },
+      { label: 'Role', value: 'Systems Designer · UX Researcher' },
       {
-        label: 'My Contribution',
+        label: 'Methods',
         value: 'Systems Mapping · Information Design · Research Synthesis',
       },
       {
-        label: 'Outcome & Impact',
+        label: 'Impact',
         value:
           'Interactive visualization tool that streamlines learning and building of complex healthcare ecosystems',
       },
@@ -268,7 +270,10 @@ function App() {
     closeNav()
     const target = document.getElementById(id)
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const reduceMotion =
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
     }
   }
 
@@ -344,6 +349,9 @@ function App() {
                 <p className="hero-greeting">Hello,</p>
                 <h1 id="hero-title">I&apos;m Soyon Kim,</h1>
                 <h2>A human-centered UX Design Researcher</h2>
+                <p className="hero-proof">
+                  Mixed Methods · Co-Design · Longitudinal User Research · HRI
+                </p>
                 <p className="hero-subline">
                   Designing trustworthy, responsible systems
                   <br />
@@ -352,7 +360,11 @@ function App() {
               </div>
               <div
                 className="hero-portrait"
-                style={heroBlurbHeight ? { height: `${heroBlurbHeight}px` } : undefined}
+                style={
+                  heroBlurbHeight
+                    ? { height: `${Math.max(240, Math.round(heroBlurbHeight * 0.88))}px` }
+                    : undefined
+                }
               >
                 <img
                   src="/soyon-portrait.png"
@@ -408,22 +420,27 @@ function App() {
 
                 <div className="project-grid" role="list" aria-label={`${pillar.title} projects`}>
                   {items.map((project) => (
-                    <article key={project.id} className="project-card" role="listitem">
+                    <article
+                      key={project.id}
+                      className={`project-card${project.featured ? ' is-featured' : ''}`}
+                      role="listitem"
+                    >
+                      {project.featured ? <p className="featured-badge">Featured Flagship Project</p> : null}
                       <h4>{project.title}</h4>
                       <p className="project-subtitle">{project.subtitle}</p>
 
                       <div className="meta-divider" aria-hidden="true" />
 
-                      <ul className="meta-list" aria-label={`Project details for ${project.title}`}>
-                        {project.meta.map((item) => (
-                          <li key={item.label}>
-                            <MetaIcon label={item.label} />
-                            <span>
-                              <strong>{item.label}:</strong> {item.value}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="meta-rows" aria-label={`Project details for ${project.title}`}>
+                        <div className="meta-row">
+                          <MetaCell item={project.meta.find((item) => item.label === 'Supports')} />
+                          <MetaCell item={project.meta.find((item) => item.label === 'Role')} />
+                        </div>
+                        <div className="meta-row">
+                          <MetaCell item={project.meta.find((item) => item.label === 'Methods')} />
+                          <MetaCell item={project.meta.find((item) => item.label === 'Impact')} />
+                        </div>
+                      </div>
 
                       <a className="card-link" href="#contact">
                         Read case study <span aria-hidden="true">→</span>
@@ -508,6 +525,23 @@ type MetaIconProps = {
   label: MetaItem['label']
 }
 
+type MetaCellProps = {
+  item: MetaItem | undefined
+}
+
+function MetaCell({ item }: MetaCellProps) {
+  if (!item) return null
+
+  return (
+    <div className="meta-cell">
+      <MetaIcon label={item.label} />
+      <span>
+        <strong>{item.label}:</strong> {item.value}
+      </span>
+    </div>
+  )
+}
+
 function MetaIcon({ label }: MetaIconProps) {
   const props = {
     'aria-hidden': true,
@@ -524,7 +558,7 @@ function MetaIcon({ label }: MetaIconProps) {
     )
   }
 
-  if (label === 'My Role') {
+  if (label === 'Role') {
     return (
       <svg {...props}>
         <rect x="4" y="7" width="16" height="13" rx="2" />
@@ -533,7 +567,7 @@ function MetaIcon({ label }: MetaIconProps) {
     )
   }
 
-  if (label === 'My Contribution') {
+  if (label === 'Methods') {
     return (
       <svg {...props}>
         <path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 17l-5-9V3" />
