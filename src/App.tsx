@@ -184,19 +184,29 @@ function App() {
   const [heroBlurbHeight, setHeroBlurbHeight] = useState<number | null>(null)
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      setTheme(storedTheme)
-      return
+    try {
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        setTheme(storedTheme)
+        return
+      }
+    } catch {
+      // Fallback to system theme when storage is unavailable.
     }
 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const prefersDark =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     setTheme(prefersDark ? 'dark' : 'light')
   }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem(THEME_STORAGE_KEY, theme)
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme)
+    } catch {
+      // Ignore storage write errors in restricted contexts.
+    }
   }, [theme])
 
   useEffect(() => {
@@ -209,12 +219,13 @@ function App() {
 
     updateHeight()
 
-    const observer = new ResizeObserver(() => updateHeight())
-    observer.observe(blurb)
+    const canObserve = typeof window.ResizeObserver !== 'undefined'
+    const observer = canObserve ? new window.ResizeObserver(() => updateHeight()) : null
+    observer?.observe(blurb)
     window.addEventListener('resize', updateHeight)
 
     return () => {
-      observer.disconnect()
+      observer?.disconnect()
       window.removeEventListener('resize', updateHeight)
     }
   }, [])

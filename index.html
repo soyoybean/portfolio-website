@@ -8,11 +8,18 @@
     <title>Soyon Kim | Human-centered UX Design Research</title>
     <script>
       (() => {
-        const key = 'portfolio-theme'
-        const stored = localStorage.getItem(key)
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light'
-        document.documentElement.setAttribute('data-theme', theme)
+        try {
+          const key = 'portfolio-theme'
+          const stored = window.localStorage.getItem(key)
+          const prefersDark =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          const theme =
+            stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light'
+          document.documentElement.setAttribute('data-theme', theme)
+        } catch {
+          document.documentElement.setAttribute('data-theme', 'light')
+        }
       })()
     </script>
   </head>
