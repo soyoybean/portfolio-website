@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --max-width: 1280px;
+  --max-width: 1200px;
   --header-height: 96px;
 
   --space-4: 4px;

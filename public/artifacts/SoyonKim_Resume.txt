@@ -1,0 +1,6 @@
+Soyon Kim Resume Placeholder
+
+Replace this file with your finalized PDF resume at:
+/public/artifacts/SoyonKim_Resume.pdf
+
+Then update src/App.tsx to point the Download Resume button to the PDF path.

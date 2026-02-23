@@ -1,14 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 type Theme = 'light' | 'dark'
 type PillarKey = 'robotics' | 'ai' | 'systems'
 type PillarIconKey = 'heart' | 'brain' | 'network'
-
-type MetaItem = {
-  label: 'Supports' | 'Role' | 'Methods' | 'Impact'
-  value: string
-}
 
 type Pillar = {
   key: PillarKey
@@ -22,8 +17,10 @@ type Project = {
   pillar: PillarKey
   title: string
   subtitle: string
-  featured?: boolean
-  meta: MetaItem[]
+  supports: string
+  impact: string
+  thumbnail: string
+  caseStudyUrl: string
 }
 
 const THEME_STORAGE_KEY = 'portfolio-theme'
@@ -56,134 +53,57 @@ const projects: Project[] = [
     id: 'flowguard-pain-relief-robotic-system',
     pillar: 'robotics',
     title: 'FlowGuard: Pain Relief Robotic System',
-    featured: true,
-    subtitle:
-      'Long-term assistive robotics for daily pain relief in at-home wheelchair use',
-    meta: [
-      {
-        label: 'Supports',
-        value:
-          'People with quadriplegia, ALS, and other long-term wheelchair users',
-      },
-      {
-        label: 'Role',
-        value: 'UX Research Lead · Product Designer · Hardware Engineer',
-      },
-      {
-        label: 'Methods',
-        value: 'At-Home Interviews · Co-Design · Longitudinal User Testing',
-      },
-      {
-        label: 'Impact',
-        value:
-          '1+ Year In-Situ Deployment (12+ hrs/day) with reduced daily pain & caregiver burden',
-      },
-    ],
+    subtitle: 'Longitudinal in-home robotic support for chronic pain management.',
+    supports: 'People with quadriplegia, ALS, and long-term wheelchair users',
+    impact: '1+ year deployment (12+ hrs/day) with reduced pain and caregiver burden',
+    thumbnail: '/project-thumbs/flowguard.svg',
+    caseStudyUrl: '/case-studies/flowguard.html',
   },
   {
     id: 'disability-accommodation-advocacy-llm',
     pillar: 'ai',
     title: 'Disability Accommodation Advocacy LLM',
-    subtitle:
-      'A human-centered AI support workflow for accommodation request drafting',
-    meta: [
-      {
-        label: 'Supports',
-        value: 'Students with disabilities navigating accommodation systems',
-      },
-      {
-        label: 'Role',
-        value: 'UX Researcher · Human-Centered AI Designer',
-      },
-      {
-        label: 'Methods',
-        value: 'Usability Testing · Think-Aloud Protocols · Iterative Design',
-      },
-      {
-        label: 'Impact',
-        value:
-          'Functional prototype with user evaluation, showing reduced cognitive & emotional load in drafting advocacy requests',
-      },
-    ],
+    subtitle: 'Human-centered AI assistant for accommodation request drafting.',
+    supports: 'Students with disabilities navigating accommodation systems',
+    impact: 'Prototype reduced cognitive and emotional load in advocacy drafting',
+    thumbnail: '/project-thumbs/accommodation-llm.svg',
+    caseStudyUrl: '/case-studies/accommodation-llm.html',
   },
   {
     id: 'carmen-cognitively-assistive-robot',
     pillar: 'robotics',
-    title: 'CARMEN — Cognitively Assistive Robot for Motivation & Neurorehabilitation',
-    subtitle:
-      'Design patterns for home-based assistive robotics in cognitive support settings',
-    meta: [
-      {
-        label: 'Supports',
-        value:
-          'People with Mild Cognitive Impairment (PwMCI), caregivers, and neuropsychologists',
-      },
-      {
-        label: 'Role',
-        value: 'UX Designer · HRI Researcher',
-      },
-      {
-        label: 'Methods',
-        value: 'Literature Review · Human-Centered Design · Concept Evaluation',
-      },
-      {
-        label: 'Impact',
-        value:
-          'Conference Paper outlining design patterns for home-based assistive robots',
-      },
-    ],
+    title: 'CARMEN: Assistive Robot for Neurorehabilitation',
+    subtitle: 'Home-oriented robot concepts for motivation and cognitive support.',
+    supports: 'People with mild cognitive impairment, caregivers, and neuropsychologists',
+    impact: 'Conference paper introducing design patterns for home assistive robots',
+    thumbnail: '/project-thumbs/carmen.svg',
+    caseStudyUrl: '/case-studies/carmen.html',
   },
   {
     id: 'artists-vs-ai-creator-protection',
     pillar: 'ai',
-    title: 'Artists vs AI: Creator Protection & AI Transparency Research',
-    subtitle:
-      'Transparency and protection research for creators in algorithmic content ecosystems',
-    meta: [
-      { label: 'Supports', value: 'Small Instagram artists (<10K followers)' },
-      { label: 'Role', value: 'UX Researcher' },
-      {
-        label: 'Methods',
-        value: 'Contextual Interviews · Affinity Clustering · Cultural Modeling',
-      },
-      {
-        label: 'Impact',
-        value:
-          'Research report & design framework around 202 synthesized interpretation notes & design directions',
-      },
-    ],
+    title: 'Artists vs AI: Creator Protection & Transparency',
+    subtitle: 'Trust and fairness research for small creators in AI-mediated platforms.',
+    supports: 'Small Instagram artists (<10K followers)',
+    impact: 'Framework from 202 synthesis notes guiding transparency-focused design',
+    thumbnail: '/project-thumbs/artists-vs-ai.svg',
+    caseStudyUrl: '/case-studies/artists-vs-ai.html',
   },
   {
     id: 'us-healthcare-access-map',
     pillar: 'systems',
-    title: 'How Accessing U.S. Healthcare Works — Interactive Systemic Map',
-    subtitle:
-      'An interactive map that clarifies access pathways across complex healthcare systems',
-    meta: [
-      {
-        label: 'Supports',
-        value:
-          'Patients, caregivers, and stakeholders navigating complex healthcare access systems',
-      },
-      { label: 'Role', value: 'Systems Designer · UX Researcher' },
-      {
-        label: 'Methods',
-        value: 'Systems Mapping · Information Design · Research Synthesis',
-      },
-      {
-        label: 'Impact',
-        value:
-          'Interactive visualization tool that streamlines learning and building of complex healthcare ecosystems',
-      },
-    ],
+    title: 'How Accessing U.S. Healthcare Works: Interactive Systems Map',
+    subtitle: 'Systems visualization for navigating healthcare access complexity.',
+    supports: 'Patients, caregivers, and healthcare ecosystem stakeholders',
+    impact: 'Interactive tool that accelerates understanding of healthcare access pathways',
+    thumbnail: '/project-thumbs/healthcare-map.svg',
+    caseStudyUrl: '/case-studies/healthcare-map.html',
   },
 ]
 
 function App() {
   const [theme, setTheme] = useState<Theme>('light')
   const [isNavOpen, setIsNavOpen] = useState(false)
-  const heroBlurbRef = useRef<HTMLDivElement | null>(null)
-  const [heroBlurbHeight, setHeroBlurbHeight] = useState<number | null>(null)
 
   useEffect(() => {
     try {
@@ -210,27 +130,6 @@ function App() {
       // Ignore storage write errors in restricted contexts.
     }
   }, [theme])
-
-  useEffect(() => {
-    const blurb = heroBlurbRef.current
-    if (!blurb) return
-
-    const updateHeight = () => {
-      setHeroBlurbHeight(Math.round(blurb.getBoundingClientRect().height))
-    }
-
-    updateHeight()
-
-    const canObserve = typeof window.ResizeObserver !== 'undefined'
-    const observer = canObserve ? new window.ResizeObserver(() => updateHeight()) : null
-    observer?.observe(blurb)
-    window.addEventListener('resize', updateHeight)
-
-    return () => {
-      observer?.disconnect()
-      window.removeEventListener('resize', updateHeight)
-    }
-  }, [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -345,31 +244,24 @@ function App() {
         <section id="home" className="section hero" aria-labelledby="hero-title">
           <div className="hero-stage">
             <div className="container hero-layout">
-              <div className="hero-copy" ref={heroBlurbRef}>
+              <div className="hero-copy">
                 <p className="hero-greeting">Hello,</p>
                 <h1 id="hero-title">I&apos;m Soyon Kim,</h1>
-                <h2>A human-centered UX Design Researcher</h2>
-                <p className="hero-proof">
-                  Mixed Methods · Co-Design · Longitudinal User Research · HRI
-                </p>
+                <p className="hero-titleline">Human-centered UX Design Researcher</p>
                 <p className="hero-subline">
-                  Designing trustworthy, responsible systems
-                  <br />
-                  that support wellbeing and human agency.
+                  My goal is to build trustworthy, responsible systems that support human wellbeing and agency.
                 </p>
+                <p className="hero-rings">
+                  Human-Centered · Real-World Deployment · Responsible Systems · Healthtech
+                </p>
+                <div className="hero-actions">
+                  <a className="hero-btn hero-btn-secondary" href="/artifacts/SoyonKim_Resume.txt" download>
+                    Download Resume
+                  </a>
+                </div>
               </div>
-              <div
-                className="hero-portrait"
-                style={
-                  heroBlurbHeight
-                    ? { height: `${Math.max(240, Math.round(heroBlurbHeight * 0.88))}px` }
-                    : undefined
-                }
-              >
-                <img
-                  src="/soyon-portrait.png"
-                  alt="Portrait of Soyon Kim"
-                />
+              <div className="hero-portrait">
+                <img src="/soyon-portrait.png" alt="Portrait of Soyon Kim" loading="eager" decoding="async" />
               </div>
             </div>
 
@@ -389,11 +281,11 @@ function App() {
                         <PillarIcon icon={pillar.icon} />
                       </span>
                       <span className="pillar-title">{pillar.title}</span>
-                      <span className="pillar-arrow" aria-hidden="true">
-                        →
-                      </span>
                     </div>
                     <span className="pillar-description">{pillar.description}</span>
+                    <span className="pillar-explore" aria-hidden="true">
+                      Explore →
+                    </span>
                   </button>
                 ))}
               </div>
@@ -414,37 +306,38 @@ function App() {
                   <span className="pillar-header-icon" aria-hidden="true">
                     <PillarIcon icon={pillar.icon} />
                   </span>
-                  <h3 id={`pillar-heading-${pillar.key}`}>{pillar.title}</h3>
+                  <h2 id={`pillar-heading-${pillar.key}`}>{pillar.title}</h2>
                 </header>
                 <p className="pillar-intro">{pillar.description}</p>
 
                 <div className="project-grid" role="list" aria-label={`${pillar.title} projects`}>
                   {items.map((project) => (
-                    <article
-                      key={project.id}
-                      className={`project-card${project.featured ? ' is-featured' : ''}`}
-                      role="listitem"
-                    >
-                      {project.featured ? <p className="featured-badge">Featured Flagship Project</p> : null}
-                      <h4>{project.title}</h4>
+                    <article key={project.id} className="project-card" role="listitem">
+                      <img
+                        className="project-thumb"
+                        src={project.thumbnail}
+                        alt={`${project.title} thumbnail preview`}
+                        loading="lazy"
+                        decoding="async"
+                        width={640}
+                        height={360}
+                      />
+
+                      <h3>{project.title}</h3>
                       <p className="project-subtitle">{project.subtitle}</p>
 
-                      <div className="meta-divider" aria-hidden="true" />
+                      <p className="meta-line">
+                        <strong>Supports:</strong> {project.supports}
+                      </p>
+                      <p className="meta-line meta-impact">
+                        <strong>Impact:</strong> {project.impact}
+                      </p>
 
-                      <div className="meta-rows" aria-label={`Project details for ${project.title}`}>
-                        <div className="meta-row">
-                          <MetaCell item={project.meta.find((item) => item.label === 'Supports')} />
-                          <MetaCell item={project.meta.find((item) => item.label === 'Role')} />
-                        </div>
-                        <div className="meta-row">
-                          <MetaCell item={project.meta.find((item) => item.label === 'Methods')} />
-                          <MetaCell item={project.meta.find((item) => item.label === 'Impact')} />
-                        </div>
+                      <div className="project-links">
+                        <a className="card-link card-link-secondary" href={project.caseStudyUrl}>
+                          Case Study <span aria-hidden="true">↗</span>
+                        </a>
                       </div>
-
-                      <a className="card-link" href="#contact">
-                        Read case study <span aria-hidden="true">→</span>
-                      </a>
                     </article>
                   ))}
                 </div>
@@ -459,7 +352,8 @@ function App() {
           <div className="container contact-layout">
             <h2 id="contact-title">Contact</h2>
             <p>
-              For any questions, thoughts, or feedback, feel free to reach out via any of the following:
+              For opportunities, collaboration, or project questions, reach out directly by email or through my
+              professional profiles.
             </p>
 
             <ul className="social-list" aria-label="Social links">
@@ -470,18 +364,20 @@ function App() {
                 </a>
               </li>
               <li>
-                <a href="https://x.com/soyoybean" target="_blank" rel="noreferrer noopener">
-                  <SocialIcon type="x" />
-                  X
+                <a href="https://github.com/soyoybean" target="_blank" rel="noreferrer noopener">
+                  <SocialIcon type="github" />
+                  GitHub
                 </a>
               </li>
               <li>
                 <a href="mailto:soyonkim00@gmail.com">
                   <SocialIcon type="gmail" />
-                  Gmail
+                  soyonkim00@gmail.com
                 </a>
               </li>
             </ul>
+
+            <p className="domain-note">Production-ready deployment with custom domain support.</p>
           </div>
         </section>
       </main>
@@ -521,70 +417,8 @@ function PillarIcon({ icon }: PillarIconProps) {
   )
 }
 
-type MetaIconProps = {
-  label: MetaItem['label']
-}
-
-type MetaCellProps = {
-  item: MetaItem | undefined
-}
-
-function MetaCell({ item }: MetaCellProps) {
-  if (!item) return null
-
-  return (
-    <div className="meta-cell">
-      <MetaIcon label={item.label} />
-      <span>
-        <strong>{item.label}:</strong> {item.value}
-      </span>
-    </div>
-  )
-}
-
-function MetaIcon({ label }: MetaIconProps) {
-  const props = {
-    'aria-hidden': true,
-    viewBox: '0 0 24 24',
-  }
-
-  if (label === 'Supports') {
-    return (
-      <svg {...props}>
-        <circle cx="8" cy="9" r="3" />
-        <circle cx="16" cy="9" r="3" />
-        <path d="M3 19c1.7-2.8 4.2-4.2 7-4.2S15.3 16.2 17 19M12 19c1.1-1.9 2.8-3 5-3.3" />
-      </svg>
-    )
-  }
-
-  if (label === 'Role') {
-    return (
-      <svg {...props}>
-        <rect x="4" y="7" width="16" height="13" rx="2" />
-        <path d="M9 7V5h6v2" />
-      </svg>
-    )
-  }
-
-  if (label === 'Methods') {
-    return (
-      <svg {...props}>
-        <path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 17l-5-9V3" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg {...props}>
-      <path d="M4 16.5 9 11l4 4 7-7" />
-      <path d="M20 12v-4h-4" />
-    </svg>
-  )
-}
-
 type SocialIconProps = {
-  type: 'linkedin' | 'x' | 'gmail'
+  type: 'linkedin' | 'github' | 'gmail'
 }
 
 function SocialIcon({ type }: SocialIconProps) {
@@ -596,10 +430,10 @@ function SocialIcon({ type }: SocialIconProps) {
     )
   }
 
-  if (type === 'x') {
+  if (type === 'github') {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 4h4.6l3.2 4.8L15.8 4H20l-6 7.1L20.4 20h-4.6l-3.7-5.4L7.3 20H3l6.6-7.8L4 4Z" />
+        <path d="M9 18c-4 .8-4-2-6-2m12 4v-3.1a2.7 2.7 0 0 0-.8-2.1c2.6-.3 5.3-1.3 5.3-6a4.7 4.7 0 0 0-1.3-3.3 4.4 4.4 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.8 11.8 0 0 0-6.2 0C6 2 5 2.3 5 2.3a4.4 4.4 0 0 0-.1 3.2A4.7 4.7 0 0 0 3.6 8.8c0 4.7 2.7 5.7 5.3 6a2.7 2.7 0 0 0-.8 2.1V20" />
       </svg>
     )
   }
