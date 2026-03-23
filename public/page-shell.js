@@ -21,6 +21,8 @@
     const icon = document.querySelector('[data-theme-icon]')
     if (toggle instanceof HTMLButtonElement) {
       const label = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'
+      toggle.setAttribute('role', 'switch')
+      toggle.setAttribute('aria-checked', String(theme === 'dark'))
       toggle.setAttribute('aria-label', label)
       toggle.setAttribute('title', label)
     }
@@ -38,41 +40,82 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    const focusTarget = (target) => {
+      if (!(target instanceof HTMLElement)) {
+        return
+      }
+
+      if (!target.hasAttribute('tabindex')) {
+        target.setAttribute('tabindex', '-1')
+      }
+
+      target.focus({ preventScroll: true })
+    }
+
     let theme = getPreferredTheme()
     applyTheme(theme)
 
     const navLinks = Array.from(document.querySelectorAll('.primary-nav a'))
-    const path = window.location.pathname
-    const hash = window.location.hash
+    const getActiveKey = () => {
+      const path = window.location.pathname
+      const hash = window.location.hash
 
-    let activeKey = ''
-    if (path === '/' || path.endsWith('/index.html')) {
-      if (hash === '#impact-anchor' || hash === '#work') {
-        activeKey = 'work'
-      } else if (hash === '#about') {
-        activeKey = 'about'
-      } else if (hash === '#contact') {
-        activeKey = 'contact'
-      } else {
-        activeKey = 'home'
+      if (path === '/' || path.endsWith('/index.html')) {
+        if (hash === '#impact-anchor' || hash === '#work') {
+          return 'work'
+        }
+        if (hash === '#about' || hash === '#about-home-title') {
+          return 'about'
+        }
+        if (hash === '#contact' || hash === '#contact-home-title') {
+          return 'contact'
+        }
+        return 'home'
       }
-    } else if (path.includes('/case-studies/')) {
-      activeKey = 'work'
+
+      if (path.includes('/case-studies/')) {
+        return 'work'
+      }
+
+      return ''
     }
+
+    const syncPrimaryNav = () => {
+      const activeKey = getActiveKey()
+
+      navLinks.forEach((link) => {
+        if (!(link instanceof HTMLAnchorElement)) {
+          return
+        }
+
+        link.classList.remove('is-active')
+        link.removeAttribute('aria-current')
+
+        if (link.dataset.nav === activeKey) {
+          link.classList.add('is-active')
+          link.setAttribute('aria-current', 'page')
+        }
+      })
+    }
+
+    syncPrimaryNav()
 
     navLinks.forEach((link) => {
       if (!(link instanceof HTMLAnchorElement)) {
         return
       }
-      if (link.dataset.nav === activeKey) {
-        link.classList.add('is-active')
-      }
+
       link.addEventListener('click', () => {
         if (link.dataset.nav === 'resume') {
           return
         }
-        navLinks.forEach((node) => node.classList.remove('is-active'))
+
+        navLinks.forEach((node) => {
+          node.classList.remove('is-active')
+          node.removeAttribute('aria-current')
+        })
         link.classList.add('is-active')
+        link.setAttribute('aria-current', 'page')
       })
     })
 
@@ -85,8 +128,57 @@
 
     const getSectionOffset = () => {
       const siteHeaderHeight = siteHeader instanceof HTMLElement ? siteHeader.offsetHeight : 0
-      const caseHeaderHeight = caseHeader instanceof HTMLElement ? caseHeader.offsetHeight : 0
-      return siteHeaderHeight + caseHeaderHeight + 10
+      return siteHeaderHeight + 16
+    }
+
+    const syncSectionNav = () => {
+      if (sectionNavLinks.length === 0) {
+        return
+      }
+
+      const bottomThreshold = 8
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - bottomThreshold) {
+        const lastLink = sectionNavLinks.at(-1)
+        sectionNavLinks.forEach((link) => {
+          const isActive = link === lastLink
+          link.classList.toggle('is-active', isActive)
+          if (isActive) {
+            link.setAttribute('aria-current', 'location')
+          } else {
+            link.removeAttribute('aria-current')
+          }
+        })
+        return
+      }
+
+      const marker = window.scrollY + getSectionOffset() + 12
+      let activeLink = sectionNavLinks[0]
+
+      sectionNavLinks.forEach((link) => {
+        if (!(link instanceof HTMLAnchorElement)) {
+          return
+        }
+
+        const id = link.getAttribute('href')?.slice(1)
+        if (!id) {
+          return
+        }
+
+        const target = document.getElementById(id)
+        if (target && window.scrollY + target.getBoundingClientRect().top <= marker) {
+          activeLink = link
+        }
+      })
+
+      sectionNavLinks.forEach((link) => {
+        const isActive = link === activeLink
+        link.classList.toggle('is-active', isActive)
+        if (isActive) {
+          link.setAttribute('aria-current', 'location')
+        } else {
+          link.removeAttribute('aria-current')
+        }
+      })
     }
 
     if (sectionNavLinks.length > 0) {
@@ -107,18 +199,39 @@
           }
 
           event.preventDefault()
+          focusTarget(target)
           const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - getSectionOffset())
           window.scrollTo({
             top,
             behavior: prefersReducedMotion ? 'auto' : 'smooth',
           })
 
-          sectionNavLinks.forEach((node) => node.classList.remove('is-active'))
+          sectionNavLinks.forEach((node) => {
+            node.classList.remove('is-active')
+            node.removeAttribute('aria-current')
+          })
           link.classList.add('is-active')
+          link.setAttribute('aria-current', 'location')
           window.history.replaceState(null, '', `#${id}`)
         })
       })
     }
+
+    syncSectionNav()
+    window.addEventListener(
+      'scroll',
+      () => {
+        syncSectionNav()
+      },
+      { passive: true },
+    )
+    window.addEventListener('resize', () => {
+      syncSectionNav()
+    })
+    window.addEventListener('pageshow', () => {
+      syncPrimaryNav()
+      syncSectionNav()
+    })
 
     const toggle = document.querySelector('[data-theme-toggle]')
     if (toggle instanceof HTMLButtonElement) {

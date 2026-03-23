@@ -21,6 +21,7 @@ type Project = {
   supports: string
   impact: string
   thumbnail: string
+  thumbnailPosition?: string
   caseStudyUrl: string
 }
 
@@ -56,56 +57,89 @@ const projects: Project[] = [
     id: 'flowguard-pain-relief-robotic-system',
     pillar: 'robotics',
     title: 'FlowGuard: Pain Relief Robotic System',
-    subtitle: 'Longitudinal in-home robotic support for chronic pain management.',
-    supports: 'People with quadriplegia, ALS, and long-term wheelchair users',
-    impact: '1+ year deployment (12+ hrs/day) with reduced pain and caregiver burden',
-    thumbnail: '/project-thumbs/flowguard.svg',
+    subtitle: '**Assistive robotic system for chronic pain relief in long-term wheelchair users**',
+    supports: 'Long-term wheelchair users with chronic pain and the caregivers supporting them',
+    impact:
+      'Deployed in real-world use **12+ hours daily for 1+ year**, reducing both pain and caregiver burden through co-designed, low-effort interaction.',
+    thumbnail: '/case-studies/FlowGuard_hero.png',
     caseStudyUrl: '/case-studies/flowguard.html',
   },
   {
     id: 'disability-accommodation-advocacy-llm',
     pillar: 'ai',
     title: 'Disability Accommodation Advocacy LLM',
-    subtitle: 'Human-centered AI assistant for accommodation request drafting.',
+    subtitle: '**AI system supporting students in navigating disability accommodation requests**',
     supports: 'Students with disabilities navigating accommodation systems',
-    impact: 'Prototype reduced cognitive and emotional load in advocacy drafting',
-    thumbnail: '/project-thumbs/accommodation-llm.svg',
+    impact: 'Reduced writing burden while revealing critical tensions around trust, over-disclosure, and user control in high-stakes communication.',
+    thumbnail: '/case-studies/DisabilityLLM_1.png',
     caseStudyUrl: '/case-studies/accommodation-llm.html',
   },
   {
     id: 'carmen-cognitively-assistive-robot',
     pillar: 'robotics',
     title: 'CARMEN: Assistive Robot for Neurorehabilitation',
-    subtitle: 'Home-oriented robot concepts for motivation and cognitive support.',
+    subtitle: '**Cognitively assistive robot for home-based neurorehabilitation and motivation**',
     supports: 'People with mild cognitive impairment, caregivers, and neuropsychologists',
-    impact: 'Conference paper introducing design patterns for home assistive robots',
-    thumbnail: '/project-thumbs/carmen.svg',
+    impact: 'Translated clinical interventions into robot interaction design, enabling collaborative goal-setting, personalization, and sustained engagement in real-world care.',
+    thumbnail: '/case-studies/CARMEN_1.png',
+    thumbnailPosition: 'center bottom',
     caseStudyUrl: '/case-studies/carmen.html',
   },
   {
     id: 'artists-vs-ai-creator-protection',
     pillar: 'ai',
     title: 'Artists vs AI: Creator Protection & Transparency',
-    subtitle: 'Trust and fairness research for small creators in AI-mediated platforms.',
+    subtitle: '**Research on creator trust, ownership, and platform responsibility in generative AI**',
     supports: 'Small Instagram artists (<10K followers)',
-    impact: 'Framework from 202 synthesis notes guiding transparency-focused design',
-    thumbnail: '/project-thumbs/artists-vs-ai.svg',
+    impact: 'Identified how lack of transparency and consent drives mistrust, informing platform-level design for ethical AI and creator protection.',
+    thumbnail: '/case-studies/ArtistsVsAI.png',
     caseStudyUrl: '/case-studies/artists-vs-ai.html',
   },
   {
     id: 'us-healthcare-access-map',
     pillar: 'systems',
     title: 'How Accessing U.S. Healthcare Works: Interactive Systems Map',
-    subtitle: 'Systems visualization for navigating healthcare access complexity.',
+    subtitle: '**Interactive system mapping of U.S. healthcare access across stakeholders and barriers**',
     supports: 'Patients, caregivers, and healthcare ecosystem stakeholders',
-    impact: 'Interactive tool that accelerates understanding of healthcare access pathways',
-    thumbnail: '/project-thumbs/healthcare-map.svg',
+    impact: 'Reveals how decisions propagate through the system, redistributing burden onto patients and caregivers and reframing access as a systems problem.',
+    thumbnail: '/case-studies/HealthcareAccess.png',
     caseStudyUrl: '/case-studies/healthcare-map.html',
   },
 ]
 
+function renderBoldMarkedText(text: string) {
+  const segments = text.split(/(\*\*.*?\*\*)/g).filter(Boolean)
+
+  return segments.map((segment, index) => {
+    if (segment.startsWith('**') && segment.endsWith('**')) {
+      return <strong key={`${segment}-${index}`}>{segment.slice(2, -2)}</strong>
+    }
+
+    return <span key={`${segment}-${index}`}>{segment}</span>
+  })
+}
+
 function App() {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') {
+      return 'light'
+    }
+
+    try {
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        return storedTheme
+      }
+    } catch {
+      // Fallback to system theme when storage is unavailable.
+    }
+
+    const prefersDark =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    return prefersDark ? 'dark' : 'light'
+  })
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [activeNav, setActiveNav] = useState<NavKey>('home')
   const [selectedPillar, setSelectedPillar] = useState<PillarKey>('robotics')
@@ -120,23 +154,6 @@ function App() {
       {} as Record<PillarKey, string>,
     ),
   )
-
-  useEffect(() => {
-    try {
-      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
-      if (storedTheme === 'light' || storedTheme === 'dark') {
-        setTheme(storedTheme)
-        return
-      }
-    } catch {
-      // Fallback to system theme when storage is unavailable.
-    }
-
-    const prefersDark =
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    setTheme(prefersDark ? 'dark' : 'light')
-  }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -159,6 +176,59 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const resolveHashTarget = (hash: string) => {
+      const rawId = hash.replace(/^#/, '')
+      const aliasMap: Record<string, string> = {
+        work: 'impact-anchor',
+        about: 'about-home-title',
+        contact: 'contact-home-title',
+      }
+
+      return aliasMap[rawId] ?? rawId
+    }
+
+    const scrollToHashTarget = () => {
+      if (!window.location.hash || window.location.hash === '#top') {
+        return false
+      }
+
+      const targetId = resolveHashTarget(window.location.hash)
+      const target = document.getElementById(targetId)
+      if (!target) {
+        return false
+      }
+
+      const header = document.querySelector('.site-header') as HTMLElement | null
+      const offset = (header?.offsetHeight ?? 0) + 12
+      const targetTop = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset)
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'auto',
+      })
+
+      return true
+    }
+
+    const syncHashScroll = () => {
+      if (scrollToHashTarget()) {
+        return
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToHashTarget()
+        })
+      })
+    }
+
+    syncHashScroll()
+    window.addEventListener('hashchange', syncHashScroll)
+
+    return () => window.removeEventListener('hashchange', syncHashScroll)
+  }, [])
+
+  useEffect(() => {
     const updateActiveSection = () => {
       const getAbsoluteTop = (element: HTMLElement) => window.scrollY + element.getBoundingClientRect().top
       const header = document.querySelector('.site-header') as HTMLElement | null
@@ -173,54 +243,28 @@ function App() {
       const workSection = document.getElementById('work') as HTMLElement | null
       const aboutSection = document.getElementById('about') as HTMLElement | null
       const contactSection = document.getElementById('contact') as HTMLElement | null
-      const workTitle = document.getElementById('impact-anchor') as HTMLElement | null
-      const aboutTitle = document.getElementById('about-home-title') as HTMLElement | null
-      const contactTitle = document.getElementById('contact-home-title') as HTMLElement | null
-
-      if (
-        !homeSection ||
-        !workSection ||
-        !aboutSection ||
-        !contactSection ||
-        !workTitle ||
-        !aboutTitle ||
-        !contactTitle
-      ) {
+      if (!homeSection || !workSection || !aboutSection || !contactSection) {
         return
       }
 
       const sections: Array<{
         key: NavKey
         section: HTMLElement
-        title: HTMLElement
       }> = [
-        {
-          key: 'home',
-          section: homeSection,
-          title: (document.getElementById('hero-title') as HTMLElement | null) ?? homeSection,
-        },
-        { key: 'work', section: workSection, title: workTitle },
-        { key: 'about', section: aboutSection, title: aboutTitle },
-        { key: 'contact', section: contactSection, title: contactTitle },
+        { key: 'home', section: homeSection },
+        { key: 'work', section: workSection },
+        { key: 'about', section: aboutSection },
+        { key: 'contact', section: contactSection },
       ]
 
-      let nextActive: NavKey = 'home'
-      for (let index = 0; index < sections.length - 1; index += 1) {
-        const current = sections[index]
-        const upcoming = sections[index + 1]
-        const currentTop = getAbsoluteTop(current.section)
-        const currentHeight = Math.max(current.section.offsetHeight, 1)
-        const upcomingTitleTop = getAbsoluteTop(upcoming.title)
-        const majorityPassedThreshold = currentTop + currentHeight * 0.55
-        const upcomingTitleVisibleThreshold = upcomingTitleTop - (headerHeight + 16)
-        const transitionThreshold = Math.max(majorityPassedThreshold, upcomingTitleVisibleThreshold)
+      const scrollMarker = window.scrollY + headerHeight + Math.min(window.innerHeight * 0.32, 220)
+      let nextActive: NavKey = sections[0].key
 
-        if (window.scrollY >= transitionThreshold) {
-          nextActive = upcoming.key
-        } else {
-          break
+      sections.forEach((entry) => {
+        if (getAbsoluteTop(entry.section) <= scrollMarker) {
+          nextActive = entry.key
         }
-      }
+      })
 
       setActiveNav((current) => (current === nextActive ? current : nextActive))
     }
@@ -254,6 +298,14 @@ function App() {
 
   const themeLabel = theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'
 
+  const focusAnchorTarget = (target: HTMLElement) => {
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1')
+    }
+
+    target.focus({ preventScroll: true })
+  }
+
   const smoothScrollToTarget = (targetId: string, navKey: NavKey) => {
     const prefersReducedMotion =
       typeof window.matchMedia === 'function' &&
@@ -269,6 +321,7 @@ function App() {
     const targetTop = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset)
 
     setActiveNav(navKey)
+    focusAnchorTarget(target)
     window.scrollTo({
       top: targetTop,
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
@@ -420,6 +473,7 @@ function App() {
               <a
                 href="#top"
                 className={activeNav === 'home' ? 'is-active' : undefined}
+                aria-current={activeNav === 'home' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
                   smoothScrollToTarget('top', 'home')
@@ -431,6 +485,7 @@ function App() {
               <a
                 href="#impact-anchor"
                 className={activeNav === 'work' ? 'is-active' : undefined}
+                aria-current={activeNav === 'work' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
                   smoothScrollToTarget('impact-anchor', 'work')
@@ -442,6 +497,7 @@ function App() {
               <a
                 href="#about-home-title"
                 className={activeNav === 'about' ? 'is-active' : undefined}
+                aria-current={activeNav === 'about' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
                   smoothScrollToTarget('about-home-title', 'about')
@@ -462,6 +518,7 @@ function App() {
               <a
                 href="#contact-home-title"
                 className={activeNav === 'contact' ? 'is-active' : undefined}
+                aria-current={activeNav === 'contact' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
                   smoothScrollToTarget('contact-home-title', 'contact')
@@ -475,6 +532,8 @@ function App() {
               type="button"
               className="theme-toggle"
               onClick={toggleTheme}
+              role="switch"
+              aria-checked={theme === 'dark'}
               aria-label={themeLabel}
               title={themeLabel}
             >
@@ -502,7 +561,7 @@ function App() {
       </header>
 
       <main id="main-content" tabIndex={-1}>
-        <section id="home" className="section hero" aria-labelledby="hero-title">
+        <section id="home" className="section hero" aria-labelledby="hero-title" tabIndex={-1}>
           <div className="hero-stage">
             <div className="container hero-layout">
               <div className="hero-copy">
@@ -516,206 +575,247 @@ function App() {
                 </div>
               </div>
               <div className="hero-portrait">
-                <img src="/soyon-portrait.png" alt="Portrait of Soyon Kim" loading="eager" decoding="async" />
+                <img src="/soyon_portrait.png" alt="Portrait of Soyon Kim" loading="eager" decoding="async" />
               </div>
             </div>
           </div>
         </section>
 
-        <section id="work" className="section work" aria-labelledby="work-pillar-title">
+        <section id="work" className="section work" aria-labelledby="impact-anchor" tabIndex={-1}>
           <div className="container work-content">
-            <p id="impact-anchor" className="hero-transition">
+            <h2 id="impact-anchor" className="hero-transition" tabIndex={-1}>
               My work spans across:
-            </p>
+            </h2>
 
-            <div id="pillar-selector" className="pillar-selector">
-              <div className="pillar-tablist" role="tablist" aria-label="Research pillars">
-                {pillars.map((pillar) => {
-                  const selected = !showAllPillars && pillar.key === selectedPillar
-                  return (
-                    <button
-                      key={pillar.key}
-                      id={`pillar-tab-${pillar.key}`}
-                      type="button"
-                      role="tab"
-                      className={`pillar-tab ${selected ? 'is-active' : ''}`}
-                      aria-selected={selected}
-                      aria-controls="pillar-content-panel"
-                      tabIndex={selected ? 0 : -1}
-                      onClick={() => setPillar(pillar.key)}
-                      onKeyDown={(event) => onPillarKeyDown(event, pillar.key)}
-                    >
-                      <span className="pillar-tab-icon" aria-hidden="true">
-                        <PillarIcon icon={pillar.icon} />
-                      </span>
-                      <span className="pillar-tab-label">{pillar.title}</span>
-                    </button>
-                  )
-                })}
-              </div>
-              <button
-                type="button"
-                className={`pillar-tab pillar-tab-see-all ${showAllPillars ? 'is-active' : ''}`}
-                aria-expanded={showAllPillars}
-                aria-controls="pillar-content-panel"
-                onClick={toggleSeeAllPillars}
-              >
-                {showAllPillars ? 'Collapse' : 'See all'}
-              </button>
-            </div>
-
-            {showAllPillars ? (
-              <section id="pillar-content-panel" className="pillar-content-panel" role="region" aria-label="All pillars">
-                {projectsByPillar.map((group) => (
-                  <section key={group.pillar.key} className="all-pillars-group">
-                    <h2>{group.pillar.title}</h2>
-                    <p className="pillar-intro">{group.pillar.description}</p>
-                    <div className="project-stack">
-                      {group.items.map((project) => (
-                        <a key={project.id} className="project-focus-card is-selected" href={project.caseStudyUrl}>
-                          <div className="project-focus-media">
-                            <img
-                              src={project.thumbnail}
-                              alt={`${project.title} preview`}
-                              loading="lazy"
-                              decoding="async"
-                              width={640}
-                              height={360}
-                            />
-                          </div>
-                          <div className="project-focus-content">
-                            <h3>{project.title}</h3>
-                            <p className="project-focus-summary">{project.subtitle}</p>
-                            <p className="meta-line meta-supports">
-                              <span className="meta-icon" aria-hidden="true">
-                                <MetaIcon type="supports" />
-                              </span>
-                              <span>
-                                <strong>Supports:</strong> {project.supports}
-                              </span>
-                            </p>
-                            <p className="meta-line meta-impact">
-                              <span className="meta-icon" aria-hidden="true">
-                                <MetaIcon type="impact" />
-                              </span>
-                              <span>
-                                <strong>Impact:</strong> {project.impact}
-                              </span>
-                            </p>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </section>
-            ) : selectedPillarGroup && selectedProject ? (
-              <section
-                id="pillar-content-panel"
-                key={selectedPillarGroup.pillar.key}
-                className="pillar-content-panel"
-                role="tabpanel"
-                aria-labelledby={`pillar-tab-${selectedPillarGroup.pillar.key}`}
-              >
-                <h2 id="work-pillar-title">{selectedPillarGroup.pillar.title}</h2>
-                <p className="pillar-intro">{selectedPillarGroup.pillar.description}</p>
-                <p className="project-tab-lead">See projects in this category:</p>
-
-                <div className="project-tabs" role="tablist" aria-label={`${selectedPillarGroup.pillar.title} projects`}>
-                  {selectedPillarGroup.items.map((project) => {
-                    const isSelected = project.id === selectedProject.id
+            <div className="work-panel-shell">
+              <div id="pillar-selector" className="pillar-selector">
+                <div className="pillar-tablist" role="tablist" aria-label="Research pillars">
+                  {pillars.map((pillar) => {
+                    const selected = !showAllPillars && pillar.key === selectedPillar
                     return (
                       <button
-                        key={project.id}
-                        id={`project-tab-${project.id}`}
+                        key={pillar.key}
+                        id={`pillar-tab-${pillar.key}`}
                         type="button"
                         role="tab"
-                        className={`project-tab ${isSelected ? 'is-active' : ''}`}
-                        aria-selected={isSelected}
-                        aria-controls={`project-panel-${selectedPillarGroup.pillar.key}`}
-                        tabIndex={isSelected ? 0 : -1}
-                        onClick={() => selectPillarProject(selectedPillarGroup.pillar.key, project.id)}
-                        onKeyDown={(event) => onProjectKeyDown(event, project.id)}
+                        className={`pillar-tab ${selected ? 'is-active' : ''}`}
+                        aria-selected={selected}
+                        aria-controls="pillar-content-panel"
+                        tabIndex={selected ? 0 : -1}
+                        onClick={() => setPillar(pillar.key)}
+                        onKeyDown={(event) => onPillarKeyDown(event, pillar.key)}
                       >
-                        {project.title}
+                        <span className="pillar-tab-icon" aria-hidden="true">
+                          <PillarIcon icon={pillar.icon} />
+                        </span>
+                        <span className="pillar-tab-label">{pillar.title}</span>
                       </button>
                     )
                   })}
                 </div>
-
-                <div
-                  id={`project-panel-${selectedPillarGroup.pillar.key}`}
-                  className="project-tabpanel"
-                  role="tabpanel"
-                  aria-labelledby={`project-tab-${selectedProject.id}`}
+                <button
+                  type="button"
+                  className={`pillar-tab pillar-tab-see-all ${showAllPillars ? 'is-active' : ''}`}
+                  aria-expanded={showAllPillars}
+                  aria-controls="pillar-content-panel"
+                  onClick={toggleSeeAllPillars}
                 >
-                  <a className="project-focus-card is-selected" href={selectedProject.caseStudyUrl}>
-                    <div className="project-focus-media">
-                      <img
-                        src={selectedProject.thumbnail}
-                        alt={`${selectedProject.title} preview`}
-                        loading="lazy"
-                        decoding="async"
-                        width={640}
-                        height={360}
-                      />
-                    </div>
-                    <div className="project-focus-content">
-                      <h3>{selectedProject.title}</h3>
-                      <p className="project-focus-summary">{selectedProject.subtitle}</p>
-                      <p className="meta-line meta-supports">
-                        <span className="meta-icon" aria-hidden="true">
-                          <MetaIcon type="supports" />
-                        </span>
-                        <span>
-                          <strong>Supports:</strong> {selectedProject.supports}
-                        </span>
-                      </p>
-                      <p className="meta-line meta-impact">
-                        <span className="meta-icon" aria-hidden="true">
-                          <MetaIcon type="impact" />
-                        </span>
-                        <span>
-                          <strong>Impact:</strong> {selectedProject.impact}
-                        </span>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              </section>
-            ) : null}
+                  {showAllPillars ? 'Collapse' : 'See all'}
+                </button>
+              </div>
+
+              {showAllPillars ? (
+                <section id="pillar-content-panel" className="pillar-content-panel" role="region" aria-label="All pillars">
+                  {projectsByPillar.map((group) => (
+                    <section key={group.pillar.key} className="all-pillars-group">
+                      <p className="pillar-group-title">{group.pillar.title}</p>
+                      <p className="pillar-intro">{group.pillar.description}</p>
+                      <div className="project-stack">
+                        {group.items.map((project) => (
+                          <a
+                            key={project.id}
+                            className="project-focus-card is-selected"
+                            href={project.caseStudyUrl}
+                            aria-label={`View ${project.title} project`}
+                          >
+                            <div className="project-focus-media">
+                              <img
+                                src={project.thumbnail}
+                                alt={`${project.title} preview`}
+                                loading="lazy"
+                                decoding="async"
+                                width={640}
+                                height={360}
+                                style={project.thumbnailPosition ? { objectPosition: project.thumbnailPosition } : undefined}
+                              />
+                            </div>
+                            <div className="project-focus-content">
+                              <h3>{project.title}</h3>
+                              <p className="project-focus-summary">{renderBoldMarkedText(project.subtitle)}</p>
+                              <p className="meta-line meta-supports">
+                                <span className="meta-icon" aria-hidden="true">
+                                  <MetaIcon type="supports" />
+                                </span>
+                                <span>
+                                  <strong>Supports:</strong> {project.supports}
+                                </span>
+                              </p>
+                              <p className="meta-line meta-impact">
+                                <span className="meta-icon" aria-hidden="true">
+                                  <MetaIcon type="impact" />
+                                </span>
+                                <span>
+                                  <strong>Impact:</strong> {renderBoldMarkedText(project.impact)}
+                                </span>
+                              </p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </section>
+              ) : selectedPillarGroup && selectedProject ? (
+                <section
+                  id="pillar-content-panel"
+                  key={selectedPillarGroup.pillar.key}
+                  className="pillar-content-panel"
+                  role="tabpanel"
+                  aria-labelledby={`pillar-tab-${selectedPillarGroup.pillar.key}`}
+                >
+                  <p id="work-pillar-title" className="pillar-group-title">
+                    {selectedPillarGroup.pillar.title}
+                  </p>
+                  <p className="pillar-intro">{selectedPillarGroup.pillar.description}</p>
+                  <p className="project-tab-lead">See projects in this category:</p>
+
+                  <div className="project-tabs" role="tablist" aria-label={`${selectedPillarGroup.pillar.title} projects`}>
+                    {selectedPillarGroup.items.map((project) => {
+                      const isSelected = project.id === selectedProject.id
+                      return (
+                        <button
+                          key={project.id}
+                          id={`project-tab-${project.id}`}
+                          type="button"
+                          role="tab"
+                          className={`project-tab ${isSelected ? 'is-active' : ''}`}
+                          aria-selected={isSelected}
+                          aria-controls={`project-panel-${selectedPillarGroup.pillar.key}`}
+                          tabIndex={isSelected ? 0 : -1}
+                          onClick={() => selectPillarProject(selectedPillarGroup.pillar.key, project.id)}
+                          onKeyDown={(event) => onProjectKeyDown(event, project.id)}
+                        >
+                          {project.title}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <div
+                    id={`project-panel-${selectedPillarGroup.pillar.key}`}
+                    className="project-tabpanel"
+                    role="tabpanel"
+                    aria-labelledby={`project-tab-${selectedProject.id}`}
+                  >
+                    <a
+                      className="project-focus-card is-selected"
+                      href={selectedProject.caseStudyUrl}
+                      aria-label={`View ${selectedProject.title} project`}
+                    >
+                      <div className="project-focus-media">
+                        <img
+                          src={selectedProject.thumbnail}
+                          alt={`${selectedProject.title} preview`}
+                          loading="lazy"
+                          decoding="async"
+                          width={640}
+                          height={360}
+                          style={selectedProject.thumbnailPosition ? { objectPosition: selectedProject.thumbnailPosition } : undefined}
+                        />
+                      </div>
+                      <div className="project-focus-content">
+                        <h3>{selectedProject.title}</h3>
+                        <p className="project-focus-summary">{renderBoldMarkedText(selectedProject.subtitle)}</p>
+                        <p className="meta-line meta-supports">
+                          <span className="meta-icon" aria-hidden="true">
+                            <MetaIcon type="supports" />
+                          </span>
+                          <span>
+                            <strong>Supports:</strong> {selectedProject.supports}
+                          </span>
+                        </p>
+                        <p className="meta-line meta-impact">
+                          <span className="meta-icon" aria-hidden="true">
+                            <MetaIcon type="impact" />
+                          </span>
+                          <span>
+                              <strong>Impact:</strong> {renderBoldMarkedText(selectedProject.impact)}
+                          </span>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                </section>
+              ) : null}
+            </div>
           </div>
         </section>
 
-        <section id="about" className="section about-home" aria-labelledby="about-home-title">
+        <section id="about" className="section about-home" aria-labelledby="about-home-title" tabIndex={-1}>
           <div className="container about-home-layout">
-            <h2 id="about-home-title">About Me</h2>
-            <p>
-              I am a human-centered UX Design Researcher focused on trustworthy AI, assistive robotics, and equitable
-              healthcare systems. My work combines qualitative depth with systems-level thinking to translate research
-              into practical, real-world impact.
-            </p>
-            <ul className="home-link-list" aria-label="Professional links">
-              <li>
-                <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
-                  Google Scholar
-                </a>
-              </li>
-            </ul>
+            <div className="about-home-copy">
+              <h2 id="about-home-title">About Me</h2>
+              <p>
+                I&apos;m a <strong>human-centered UX design researcher</strong> focused on building
+                <strong> trustworthy, responsible assistive systems</strong> that support wellbeing and human agency.
+                My work sits at the intersection of assistive robotics, healthcare, and AI, domains where design
+                decisions directly shape how people experience <strong>access and autonomy in care</strong> in their
+                daily lives.
+              </p>
+              <p>
+                I approach research as both a deeply qualitative and systemic practice. Through co-design, in-situ
+                research, and longitudinal engagement, I work closely with people navigating complex, high-stakes
+                environments. My focus is on translating lived experiences into real-world, sustainable design
+                decisions. I&apos;m particularly interested in how
+                <strong> systems, not just products, uplift humanity</strong>, whether that&apos;s how healthcare
+                access is structured, how assistive technologies are adopted over time, or how AI mediates sensitive
+                human interactions.
+              </p>
+              <p>
+                Across my work, I aim to bridge research and implementation: building and evaluating systems that move
+                beyond concepts into real-world deployment, and ensuring that design reflects not just what works,
+                but what is <strong>equitable and trustworthy in real human needs</strong>.
+              </p>
+              <ul className="home-link-list" aria-label="Professional links">
+                <li>
+                  <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer">
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                    Google Scholar
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <figure className="about-home-figure">
+              <img
+                src="/Soyon_GreenBackground.jpg"
+                alt="Soyon Kim portrait against a green background."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
           </div>
         </section>
 
-        <section id="contact" className="section contact-home" aria-labelledby="contact-home-title">
+        <section id="contact" className="section contact-home" aria-labelledby="contact-home-title" tabIndex={-1}>
           <div className="container contact-home-layout">
             <h2 id="contact-home-title">Contact</h2>
             <p>
@@ -745,6 +845,26 @@ function App() {
                 </a>
               </li>
             </ul>
+          </div>
+        </section>
+
+        <section
+          id="accessibility"
+          className="section accessibility-home"
+          aria-labelledby="accessibility-home-title"
+          tabIndex={-1}
+        >
+          <div className="container accessibility-home-layout">
+            <h2 id="accessibility-home-title">Accessibility Statement</h2>
+            <p>
+              This site is designed to be keyboard navigable, responsive, and readable in light and dark modes.
+              Images include descriptive alt text, and interactive elements follow accessible patterns (e.g.,
+              ARIA-compliant toggles and focus states).
+            </p>
+            <p>
+              If you encounter any accessibility barriers, please reach out; I welcome feedback and continuously
+              improve the experience.
+            </p>
           </div>
         </section>
       </main>

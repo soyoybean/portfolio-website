@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FLOWGUARD — Assistive Pain Relief System | Case Study</title>
+    <title>FlowGuard: Pain Relief Robotic System | Case Study</title>
     <link rel="icon" href="/egg_icon.png" type="image/png" />
     <link rel="alternate icon" href="/egg_icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/page-shell.css" />
     <script src="/page-shell.js" defer></script>
   </head>
-  <body>
+  <body class="case-study-flowguard">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="container nav-layout">
         <a class="brand" href="/" aria-label="Return to Home">
@@ -21,11 +22,11 @@
           <nav class="primary-nav" aria-label="Primary">
             <a href="/" data-nav="home">Home</a>
             <a href="/#impact-anchor" data-nav="work" aria-current="page">Work</a>
-            <a href="/#about" data-nav="about">About Me</a>
+            <a href="/#about-home-title" data-nav="about">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" data-nav="resume" class="nav-no-highlight">Resume</a>
-            <a href="/#contact" data-nav="contact">Contact</a>
+            <a href="/#contact-home-title" data-nav="contact">Contact</a>
           </nav>
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
+          <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
             <img src="/icons/sun-placeholder.svg" alt="" aria-hidden="true" data-theme-icon />
             <span class="sr-only">Toggle theme</span>
           </button>
@@ -34,92 +35,240 @@
     </header>
 
     <div class="page-wrap">
-      <main class="container case-main" aria-labelledby="case-title">
+      <main id="main-content" class="container case-main" aria-labelledby="case-title" tabindex="-1">
         <section class="case-header">
-          <h1 id="case-title" class="page-title">FLOWGUARD — Assistive Pain Relief System</h1>
-          <p class="page-subtitle">Human-centered assistive system for chronic pain relief and autonomy support.</p>
-          <nav class="case-section-nav" aria-label="Jump to case study sections">
-            <a class="is-active" href="#context-people">Context &amp; People</a>
-            <a href="#method-rationale">My Method &amp; Rationale</a>
-            <a href="#findings-impact">Key Findings &amp; Impact</a>
-            <a href="#reflection-next">Reflection &amp; Next Steps</a>
+          <nav class="case-nav-tree" aria-label="Project navigation">
+            <p class="case-nav-label">Projects</p>
+            <div class="case-project-list">
+              <a href="/case-studies/flowguard.html" class="case-project-link is-active" aria-current="page">FlowGuard</a>
+              <nav class="case-section-nav" aria-label="Jump to FlowGuard sections">
+                <a class="is-active" href="#context-people">Context &amp; People</a>
+                <a href="#contribution">My Contributions</a>
+                <a href="#impact">Impact</a>
+                <a href="#reflection-next">Reflection &amp; Next Steps</a>
+              </nav>
+              <a href="/case-studies/carmen.html" class="case-project-link">CARMEN</a>
+              <a href="/case-studies/accommodation-llm.html" class="case-project-link">Disability Accommodation LLM</a>
+              <a href="/case-studies/artists-vs-ai.html" class="case-project-link">Artists vs AI</a>
+              <a href="/case-studies/healthcare-map.html" class="case-project-link">Healthcare Interactive Model</a>
+            </div>
           </nav>
         </section>
 
-        <section class="case-hero-media" aria-label="Project overview media">
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for FLOWGUARD overview">
-            Placeholder image for project overview
-          </div>
-        </section>
+        <div class="case-content">
+          <section class="case-intro" aria-labelledby="case-title">
+            <div class="case-title-row">
+              <span class="case-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="8" cy="12" r="3" />
+                  <path d="M12 9h8M12 12h6M12 15h8" />
+                </svg>
+              </span>
+              <h1 id="case-title" class="page-title">FlowGuard</h1>
+            </div>
+            <p class="page-subtitle">Assistive robotic system for chronic pain relief in long-term wheelchair users</p>
+            <figure class="case-hero-figure case-hero-figure-flowguard">
+              <img
+                src="/case-studies/FlowGuard_hero.png"
+                alt="FlowGuard product prototype positioned on a wheelchair footrest."
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">Henry tries out FlowGuard &mdash; and loves it!</figcaption>
+            </figure>
+            <dl class="case-summary">
+              <div class="case-summary-item">
+                <dt>My Role</dt>
+                <dd>UX Research &amp; Co-design, Hardware Engineering</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Team</dt>
+                <dd>2 Design Researchers, 2 Engineers, 2 Client Advisors (Henry &amp; Jane Evans).</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Timeline</dt>
+                <dd>May 2023 &ndash; Present</dd>
+              </div>
+            </dl>
+            <div class="case-summary-overview">
+              <p class="case-subsection-label">Summary</p>
+              <p class="case-summary-lead">
+                Deployed in real-world use <strong>12+ hours daily for 1+ year</strong>, reducing both pain and
+                caregiver burden through co-designed, low-effort interaction.
+              </p>
+            </div>
+          </section>
+          <section class="case-section" aria-labelledby="context-people">
+            <h2 id="context-people">Context &amp; People</h2>
+            <p>
+              Through a series of virtual interviews, a clear challenge emerged:
+            </p>
+            <p class="case-emphasis-line">
+              <strong>Henry experienced chronic pain but had limited autonomy in accessing consistent physical relief.</strong>
+            </p>
+            <p>Jane, however, had trouble explaining what she wanted &ndash; &ldquo;Oh if only you guys were here to see it!&rdquo;</p>
+            <figure class="case-inline-media case-inline-media-context">
+              <img
+                src="/case-studies/group_photo.jpg"
+                alt="Group photo during the team's visit to Henry and Jane Evans's house."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">Group photo during our visit to Henry and Jane&rsquo;s house</figcaption>
+            </figure>
+            <p>
+              Without hesitation, I convinced my team to fly to their house, where we conducted direct observations,
+              contextual inquiries, and participatory research.
+            </p>
+            <p>
+              Throughout the day, Henry would sporadically experience intense and chronic pain, often in forms of
+              spasms. Each time, Henry would ping Jane via his mobile robot, and Jane would manually massage
+              Henry&rsquo;s legs, but this did not guarantee pain relief.
+            </p>
+            <p>
+              The <strong>design opportunity</strong> became clear:
+            </p>
+            <p class="case-emphasis-line">
+              <strong>Create a relief system that supports autonomy while fitting naturally into caregiver routines.</strong>
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="context-people">
-          <h2 id="context-people">Context &amp; People</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for context and stakeholder insights">
-            Placeholder image for context and people
-          </div>
-          <p>
-            This project focused on long-term wheelchair users who experience chronic pain and limited autonomy in
-            accessing consistent physical relief. Through conversations and observational insights, it became clear
-            that many assistive tools are designed with automation-first assumptions rather than real user control,
-            leading to discomfort, lack of trust, and low sustained use.
-          </p>
-          <p>
-            Stakeholders included wheelchair users with varying mobility needs, as well as informal caregivers who
-            often assist in pain management routines. A major pain point was the lack of accessible,
-            user-controllable relief systems that respect autonomy and physical constraints.
-          </p>
-        </section>
+          <section class="case-section case-section-split case-section-flowguard-role" aria-labelledby="contribution">
+            <h2 id="contribution">My Contributions</h2>
+            <div class="case-section-copy">
+              <p>
+                Given the <strong>sensitive and embodied nature of the problem</strong>, we prioritized
+                <strong>qualitative and participatory approaches</strong>. Leading a team of four students, I directed:
+              </p>
+              <ul class="case-bullet-list case-bullet-list-nested">
+                <li>
+                  field study
+                  <ul class="case-sub-bullet-list">
+                    <li>Contextual inquiries</li>
+                    <li>Direct observations</li>
+                  </ul>
+                </li>
+                <li>Participatory co-design with Henry and Jane</li>
+                <li>Iterative usability testing</li>
+              </ul>
+              <p>
+                I also built the working prototype using Arduino hardware and custom interaction logic, iterating
+                directly based on user feedback.
+              </p>
+            </div>
+            <figure class="case-section-media case-section-media-role-focus">
+              <img
+                src="/case-studies/participatory_research.jpg"
+                alt="Participatory research session for FlowGuard showing collaborators working directly with the user."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Henry, Jane, and I are conducting co-design by Henry&rsquo;s bed, where most of the research and design
+                took place.
+              </figcaption>
+            </figure>
+          </section>
 
-        <section class="case-section" aria-labelledby="method-rationale">
-          <h2 id="method-rationale">My Method &amp; Rationale</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for methods and rationale">
-            Placeholder image for method and rationale
-          </div>
-          <p>
-            I conducted semi-structured interviews and iterative usability testing to understand user preferences
-            around autonomy, transparency, and physical interaction. Given the embodied and sensitive nature of the
-            use case, qualitative and participatory approaches were prioritized over purely survey-based methods.
-          </p>
-          <p>
-            I then designed the interaction system, built the hardware prototype (Arduino assembly and coding), and
-            iterated based on user feedback to align the system behavior with real user expectations rather than
-            designer assumptions.
-          </p>
-        </section>
+          <section class="case-section case-section-flowguard-impact" aria-labelledby="impact">
+            <h2 id="impact">Impact</h2>
+            <div class="case-impact-top case-section-split case-section-split-reverse">
+              <div class="case-section-copy">
+                <p>In February 2025, we installed the final prototype on Henry&rsquo;s wheelchair, and since then, we have been gathering extremely positive feedback:</p>
+                <div class="case-quotes" aria-label="User and caregiver feedback">
+                  <blockquote class="case-quote">
+                    <p><strong>Reliable relief</strong></p>
+                    <p>&ldquo;It's exactly what I had in mind.&rdquo;</p>
+                  </blockquote>
+                  <blockquote class="case-quote">
+                    <p><strong>Reduced caregiver burden</strong></p>
+                    <p>&ldquo;You just took one thing off my plate.&rdquo;</p>
+                  </blockquote>
+                  <blockquote class="case-quote">
+                    <p><strong>Simple, intuitive use</strong></p>
+                    <p>&ldquo;Plugging and charging &mdash; it&rsquo;s just like a cellphone.&rdquo;</p>
+                  </blockquote>
+                </div>
+              </div>
+              <figure class="case-section-media case-section-media-impact-side">
+                <video
+                  controls
+                  playsinline
+                  preload="metadata"
+                  src="/case-studies/Jane_reaction.mov"
+                  aria-describedby="flowguard-jane-caption flowguard-jane-transcript"
+                >
+                  Your browser does not support the FlowGuard reaction video.
+                </video>
+                <figcaption class="case-media-caption" id="flowguard-jane-caption">
+                  Jane&rsquo;s positive reaction after FlowGuard&rsquo;s deployment in February 2025
+                </figcaption>
+                <p class="sr-only" id="flowguard-jane-transcript">
+                  Video showing Jane&rsquo;s reaction to FlowGuard during in-home deployment after the wheelchair-mounted
+                  installation.
+                </p>
+              </figure>
+            </div>
+            <figure class="case-section-media case-section-media-proof-bottom">
+              <video
+                controls
+                playsinline
+                preload="metadata"
+                src="/case-studies/stuckWithIt.mov"
+                aria-describedby="flowguard-stuck-caption flowguard-stuck-transcript"
+              >
+                Your browser does not support the FlowGuard appreciation video.
+              </video>
+              <figcaption class="case-media-caption" id="flowguard-stuck-caption">
+                Henry &amp; Jane&rsquo;s compliment &amp; gratitude to the team
+              </figcaption>
+              <p class="sr-only" id="flowguard-stuck-transcript">
+                Video showing Henry and Jane sharing appreciation with the FlowGuard team after extended real-world use.
+              </p>
+            </figure>
+          </section>
 
-        <section class="case-section" aria-labelledby="findings-impact">
-          <h2 id="findings-impact">Key Findings &amp; Impact</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for key findings and impact">
-            Placeholder image for findings and impact
-          </div>
-          <p>
-            A key insight was that users valued predictability and control over automation complexity. This directly
-            led to simplifying the interaction flow and improving feedback mechanisms in the prototype. As a result,
-            later testing sessions showed stronger user comfort and trust in system interactions.
-          </p>
-          <p>
-            The project resulted in a functional prototype and demonstrated how assistive technologies benefit from
-            transparency-centered interaction design, contributing to applied research in human-centered assistive
-            systems.
-          </p>
-        </section>
-
-        <section class="case-section" aria-labelledby="reflection-next">
-          <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for reflection and next steps">
-            Placeholder image for reflection and next steps
-          </div>
-          <p>
-            I learned how to translate sensitive user insights into tangible design iterations, especially in
-            high-stakes contexts involving accessibility and physical wellbeing. Technically, I strengthened my
-            hardware prototyping and iterative usability testing skills.
-          </p>
-          <p>
-            If I were to redo the project, I would recruit a more diverse range of mobility profiles earlier to
-            capture broader accessibility needs. Next steps would include longitudinal user testing and collaboration
-            with clinicians to evaluate sustained usability in real-world care settings.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="reflection-next">
+            <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
+            <p>
+              This project strengthened my ability to translate sensitive user insights into tangible design decisions,
+              particularly in health-related contexts.
+            </p>
+            <p>Next steps would include:</p>
+            <ul class="case-bullet-list">
+              <li>Recruiting users with diverse mobility profiles earlier in the process</li>
+              <li>Running longitudinal testing across multiple users</li>
+              <li>Collaborating with clinicians and rehabilitation specialists</li>
+            </ul>
+            <div class="case-photo-strip" aria-label="Photos with Henry and Jane">
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/henry_photo_1.png"
+                  alt="Henry Evans and collaborators during a FlowGuard visit."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/henry_photo_2.png"
+                  alt="Henry Evans and collaborators testing FlowGuard together."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/henry_photo_3.png"
+                  alt="Henry Evans and collaborators gathered during the FlowGuard project."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+            <p class="case-thank-you">Thank you, Henry and Jane, for your generous patience and collaboration with us.</p>
+          </section>
+        </div>
       </main>
 
       <footer class="universal-footer" aria-labelledby="universal-footer-quote">
@@ -128,9 +277,9 @@
           <nav class="universal-footer-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
             <a href="/#impact-anchor">Work</a>
-            <a href="/#about">About Me</a>
+            <a href="/#about-home-title">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-no-highlight">Resume</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact-home-title">Contact</a>
           </nav>
           <ul class="universal-footer-icons" aria-label="External links">
             <li><a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" /></svg></a></li>

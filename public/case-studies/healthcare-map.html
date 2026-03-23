@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/page-shell.css" />
     <script src="/page-shell.js" defer></script>
   </head>
-  <body>
+  <body class="case-study-healthcare">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="container nav-layout">
         <a class="brand" href="/" aria-label="Return to Home">
@@ -21,11 +22,11 @@
           <nav class="primary-nav" aria-label="Primary">
             <a href="/" data-nav="home">Home</a>
             <a href="/#impact-anchor" data-nav="work" aria-current="page">Work</a>
-            <a href="/#about" data-nav="about">About Me</a>
+            <a href="/#about-home-title" data-nav="about">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" data-nav="resume" class="nav-no-highlight">Resume</a>
-            <a href="/#contact" data-nav="contact">Contact</a>
+            <a href="/#contact-home-title" data-nav="contact">Contact</a>
           </nav>
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
+          <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
             <img src="/icons/sun-placeholder.svg" alt="" aria-hidden="true" data-theme-icon />
             <span class="sr-only">Toggle theme</span>
           </button>
@@ -34,78 +35,326 @@
     </header>
 
     <div class="page-wrap">
-      <main class="container case-main" aria-labelledby="case-title">
+      <main id="main-content" class="container case-main" aria-labelledby="case-title" tabindex="-1">
         <section class="case-header">
-          <h1 id="case-title" class="page-title">Healthcare Access Systemic Map (Interactive Demo)</h1>
-          <p class="page-subtitle">Interactive systems mapping to communicate healthcare access complexity.</p>
-          <nav class="case-section-nav" aria-label="Jump to case study sections">
-            <a class="is-active" href="#context-people">Context &amp; People</a>
-            <a href="#method-rationale">My Method &amp; Rationale</a>
-            <a href="#findings-impact">Key Findings &amp; Impact</a>
-            <a href="#reflection-next">Reflection &amp; Next Steps</a>
+          <nav class="case-nav-tree" aria-label="Project navigation">
+            <p class="case-nav-label">Projects</p>
+            <div class="case-project-list">
+              <a href="/case-studies/flowguard.html" class="case-project-link">FlowGuard</a>
+              <a href="/case-studies/carmen.html" class="case-project-link">CARMEN</a>
+              <a href="/case-studies/accommodation-llm.html" class="case-project-link">Disability Accommodation LLM</a>
+              <a href="/case-studies/artists-vs-ai.html" class="case-project-link">Artists vs AI</a>
+              <a href="/case-studies/healthcare-map.html" class="case-project-link is-active" aria-current="page">Healthcare Interactive Model</a>
+              <nav class="case-section-nav" aria-label="Jump to Healthcare access map sections">
+                <a class="is-active" href="#context-people">Context &amp; People</a>
+                <a href="#contribution">My Contributions</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#insights">Key Insights</a>
+                <a href="#impact">Impact</a>
+                <a href="#reflection-next">Reflection &amp; Next Steps</a>
+              </nav>
+            </div>
           </nav>
         </section>
 
-        <section class="case-hero-media" aria-label="Project overview media">
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for healthcare map overview">
-            Placeholder image for project overview
-          </div>
-        </section>
+        <div class="case-content">
+          <section class="case-intro" aria-labelledby="case-title">
+            <div class="case-title-row">
+              <span class="case-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4v16M4 12h16" />
+                  <circle cx="12" cy="12" r="7" />
+                </svg>
+              </span>
+              <h1 id="case-title" class="page-title">Healthcare Access Systemic Map (Interactive Demo)</h1>
+            </div>
+            <p class="page-subtitle">Interactive system mapping of U.S. healthcare access across stakeholders and barriers</p>
+            <figure class="case-hero-figure case-hero-figure-healthcare">
+              <img
+                src="/case-studies/HealthcareAccess.png"
+                alt="Healthcare access systemic map model."
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">the model map</figcaption>
+            </figure>
+            <dl class="case-summary" aria-label="Project overview">
+              <div class="case-summary-item">
+                <dt>My Role</dt>
+                <dd>Led systems research, stakeholder modeling, and interactive prototype development</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>My Team</dt>
+                <dd>Individual project (Lab for Cybernetics)</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Timeline</dt>
+                <dd>Jan 2026 &ndash; Present</dd>
+              </div>
+            </dl>
+            <div class="case-summary-overview">
+              <p class="case-subsection-label">Summary</p>
+              <p class="case-summary-lead">
+                Reveals how decisions propagate through the system, redistributing burden onto patients and caregivers
+                and reframing access as a systems problem.
+              </p>
+            </div>
+          </section>
 
-        <section class="case-section" aria-labelledby="context-people">
-          <h2 id="context-people">Context &amp; People</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for context and stakeholder insights">
-            Placeholder image for context and people
-          </div>
-          <p>
-            This project examined how patients and caregivers navigate the complex U.S. healthcare access system,
-            which involves multiple institutions, policies, and social barriers. Stakeholders included patients,
-            caregivers, and healthcare providers whose experiences are shaped by systemic constraints rather than
-            isolated decisions.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="context-people">
+            <h2 id="context-people">Context &amp; People</h2>
+            <p>
+              This project examines U.S. healthcare access as a <strong>complex socio-technical system</strong>, not a
+              single solvable problem.
+            </p>
+            <p><strong>Stakeholders include:</strong></p>
+            <ul class="case-bullet-list">
+              <li>Patients with disabilities</li>
+              <li>Caregivers</li>
+              <li>Clinicians, insurers, and regulators</li>
+              <li>Employers and community organizations</li>
+            </ul>
+            <p>
+              Rather than isolated UX failures, access emerges from
+              <strong>interactions between institutions, policies, and structural barriers</strong>.
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="method-rationale">
-          <h2 id="method-rationale">My Method &amp; Rationale</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for methods and rationale">
-            Placeholder image for method and rationale
-          </div>
-          <p>
-            I synthesized stakeholder narratives and systemic research into an interactive systems map that visualizes
-            access barriers and feedback loops. A systems mapping approach was chosen because linear UX models could
-            not capture the interconnected nature of healthcare access challenges.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="contribution">
+            <h2 id="contribution">My Contributions</h2>
+            <p>
+              I developed a <strong>cybernetic systems model</strong> to map how healthcare access is produced across
+              stakeholders.
+            </p>
+            <p>Feel free to explore the map below:</p>
+            <div class="case-embed-frame-wrap">
+              <iframe
+                class="case-embed-frame"
+                src="https://healthcare-access-map.vercel.app/"
+                title="Healthcare access systemic map interactive demo"
+                loading="lazy"
+                allowfullscreen
+              ></iframe>
+              <p class="case-embed-fallback">
+                If the map does not load here, open it directly at my
+                <a href="https://healthcare-access-map.vercel.app/" target="_blank" rel="noopener noreferrer">deployed website</a>.
+              </p>
+            </div>
+            <ul class="case-bullet-list">
+              <li>
+                Synthesized research into a <strong>multi-layer system</strong>:
+                <ul class="case-sub-bullet-list">
+                  <li>Stakeholders (patients, providers, insurers, etc.)</li>
+                  <li>Authorizers (control points like clinicians &amp; insurers)</li>
+                  <li>Structural barriers (policy, economic, informational)</li>
+                </ul>
+              </li>
+              <li>
+                Designed and built an <strong>interactive mapping interface (Vite + React)</strong>:
+                <ul class="case-sub-bullet-list">
+                  <li>Clickable nodes to trace causal pathways</li>
+                  <li>Multi-depth exploration of system effects</li>
+                </ul>
+              </li>
+              <li>
+                Integrated a <strong>Supabase backend</strong> to support:
+                <ul class="case-sub-bullet-list">
+                  <li>Dynamic data storage and retrieval</li>
+                  <li>User-contributed insights and comments</li>
+                  <li>Scalable system expansion</li>
+                </ul>
+              </li>
+              <li>
+                Built features for:
+                <ul class="case-sub-bullet-list">
+                  <li><strong>System tracing</strong> (direct + cascading effects)</li>
+                  <li><strong>Narrative journeys</strong> (real-world access experiences)</li>
+                  <li><strong>User-contributed insights</strong> (participatory comments)</li>
+                </ul>
+              </li>
+            </ul>
+            <p>
+              <strong>Key shift:</strong><br />
+              Reframed the problem from "design better tools" &rarr; "understand how systems produce unequal burden."
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="findings-impact">
-          <h2 id="findings-impact">Key Findings &amp; Impact</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for key findings and impact">
-            Placeholder image for findings and impact
-          </div>
-          <p>
-            The project revealed that access barriers are often cumulative and context-dependent rather than
-            single-point failures. By integrating lived experiences into an interactive model, the demo helped
-            communicate complex systemic insights in an accessible and engaging format.
-          </p>
-          <p>
-            It served as a research artifact for discussion, education, and design exploration.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="how-it-works">
+            <h2 id="how-it-works">How It Works</h2>
+            <ul class="case-bullet-list">
+              <li>
+                <strong>Select a stakeholder</strong><br />
+                Choose a group (e.g., community, authorizers, assistive tech companies) to explore its role in the
+                system
+                <figure class="case-inline-media case-inline-media-healthcare-step">
+                  <img
+                    src="/case-studies/HealthcareAccess_explore.png"
+                    alt="Stakeholder exploration screen in the healthcare access map."
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="case-media-caption">
+                    Once you select explore, you can pick a stakeholder group
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <strong>Trace system effects</strong><br />
+                Visualize how decisions propagate across barriers, institutions, and outcomes
+                <figure class="case-inline-media case-inline-media-healthcare-step">
+                  <img
+                    src="/case-studies/HealthcareAccess_Authorizers.png"
+                    alt="Authorizers view in the healthcare access map."
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="case-media-caption">
+                    Once you select explore, you can pick a stakeholder group
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <strong>Explore feedback loops</strong><br />
+                Click around to learn how actions reinforce or redistribute burden across the system
+                <figure class="case-inline-media case-inline-media-healthcare-step">
+                  <img
+                    src="/case-studies/HealthcareAccess_detail.png"
+                    alt="Expanded node details in the healthcare access map."
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="case-media-caption">Click around nodes and edges to expand details</figcaption>
+                </figure>
+              </li>
+              <li>
+                <strong>Inspect real-world stories</strong><br />
+                Select a frequently asked question to explore how systemic interactions shape patient and caregiver
+                experiences
+                <div class="case-sequence-strip case-sequence-strip-healthcare">
+                  <figure class="case-inline-media">
+                    <img
+                      src="/case-studies/HealthcareAccess_faq.png"
+                      alt="FAQ entry point in the healthcare access map."
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <span class="case-sequence-arrow" aria-hidden="true">&rarr;</span>
+                  <figure class="case-inline-media">
+                    <img
+                      src="/case-studies/HealthcareAccess_faq_1.png"
+                      alt="Expanded FAQ step in the healthcare access map."
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <span class="case-sequence-arrow" aria-hidden="true">&rarr;</span>
+                  <figure class="case-inline-media">
+                    <img
+                      src="/case-studies/HealthcareAccess_faq_2.png"
+                      alt="Further FAQ detail in the healthcare access map."
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                </div>
+                <p class="case-sequence-caption">Once you select explore, you can pick a stakeholder group</p>
+              </li>
+            </ul>
+            <p>
+              Anyone can add a comment <strong>without disclosing personal medical information</strong> to share their
+              insight, reshape the model, and enrich our lived stories
+            </p>
+            <div class="case-sequence-strip case-sequence-strip-comments">
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/HealthcareAccess_comment.png"
+                  alt="Healthcare access map comment entry interface."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <span class="case-sequence-arrow" aria-hidden="true">&rarr;</span>
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/HealthcareAccess_SunnyComment.png"
+                  alt="Sunny added a comment in the healthcare access map."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+            <p class="case-sequence-caption">Sunny added a comment</p>
+          </section>
 
-        <section class="case-section" aria-labelledby="reflection-next">
-          <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for reflection and next steps">
-            Placeholder image for reflection and next steps
-          </div>
-          <p>
-            I strengthened my systems thinking, research synthesis, and interactive design skills. I also learned how
-            to translate abstract systemic issues into tangible visual tools.
-          </p>
-          <p>
-            If revisited, I would incorporate real-time data layers and stakeholder workshops to further validate and
-            refine the model’s accuracy and applicability.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="insights">
+            <h2 id="insights">Key Insights</h2>
+            <ul class="case-bullet-list">
+              <li>
+                <strong>Access is systemically produced</strong>
+                Not determined by products alone, but by interactions across institutions
+              </li>
+              <li>
+                <strong>Authorizers act as control points</strong>
+                Clinicians, insurers, and regulators determine what care becomes accessible
+              </li>
+              <li>
+                <strong>Barriers are emergent, not isolated</strong>
+                Physical, policy, and economic barriers arise from system interactions
+              </li>
+              <li>
+                <strong>Burden is redistributed, not removed</strong>
+                Friction is absorbed by patients and caregivers (time, cost, emotional labor)
+              </li>
+              <li>
+                <strong>Visibility shapes intervention</strong>
+                Mapping the system reveals leverage points for meaningful change
+              </li>
+            </ul>
+          </section>
+
+          <section class="case-section" aria-labelledby="impact">
+            <h2 id="impact">Impact</h2>
+            <p>
+              The interactive demo transforms abstract systemic complexity into a
+              <strong>tangible, explorable tool</strong>.
+            </p>
+            <ul class="case-bullet-list">
+              <li>
+                Enables users to:
+                <ul class="case-sub-bullet-list">
+                  <li>Trace how decisions propagate across the system</li>
+                  <li>Understand where friction and burden accumulate</li>
+                </ul>
+              </li>
+              <li>
+                Serves as a:
+                <ul class="case-sub-bullet-list">
+                  <li>Research artifact</li>
+                  <li>Discussion tool</li>
+                  <li>Design exploration framework</li>
+                </ul>
+              </li>
+            </ul>
+            <p>
+              <strong>Reframes accessibility from:</strong><br />
+              UX problem &rarr; <strong>system coordination and governance problem</strong>
+            </p>
+          </section>
+
+          <section class="case-section" aria-labelledby="reflection-next">
+            <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
+            <p>
+              This project strengthened my ability to translate complex systems into actionable design artifacts.
+            </p>
+            <p><strong>Next steps:</strong></p>
+            <ul class="case-bullet-list">
+              <li>Add <strong>real-time data layers</strong> to validate system assumptions</li>
+              <li>Conduct <strong>stakeholder workshops</strong> for model refinement</li>
+              <li>Explore <strong>scenario testing</strong> for policy and design interventions</li>
+            </ul>
+          </section>
+        </div>
       </main>
 
       <footer class="universal-footer" aria-labelledby="universal-footer-quote">
@@ -114,9 +363,9 @@
           <nav class="universal-footer-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
             <a href="/#impact-anchor">Work</a>
-            <a href="/#about">About Me</a>
+            <a href="/#about-home-title">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-no-highlight">Resume</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact-home-title">Contact</a>
           </nav>
           <ul class="universal-footer-icons" aria-label="External links">
             <li><a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" /></svg></a></li>

@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GenAI Guidelines for Supporting Small Instagram Creators | Case Study</title>
+    <title>Artists vs AI: Creator Protection &amp; AI Transparency Research | Case Study</title>
     <link rel="icon" href="/egg_icon.png" type="image/png" />
     <link rel="alternate icon" href="/egg_icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/page-shell.css" />
     <script src="/page-shell.js" defer></script>
   </head>
-  <body>
+  <body class="case-study-artists">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="container nav-layout">
         <a class="brand" href="/" aria-label="Return to Home">
@@ -21,11 +22,11 @@
           <nav class="primary-nav" aria-label="Primary">
             <a href="/" data-nav="home">Home</a>
             <a href="/#impact-anchor" data-nav="work" aria-current="page">Work</a>
-            <a href="/#about" data-nav="about">About Me</a>
+            <a href="/#about-home-title" data-nav="about">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" data-nav="resume" class="nav-no-highlight">Resume</a>
-            <a href="/#contact" data-nav="contact">Contact</a>
+            <a href="/#contact-home-title" data-nav="contact">Contact</a>
           </nav>
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
+          <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
             <img src="/icons/sun-placeholder.svg" alt="" aria-hidden="true" data-theme-icon />
             <span class="sr-only">Toggle theme</span>
           </button>
@@ -34,84 +35,236 @@
     </header>
 
     <div class="page-wrap">
-      <main class="container case-main" aria-labelledby="case-title">
+      <main id="main-content" class="container case-main" aria-labelledby="case-title" tabindex="-1">
         <section class="case-header">
-          <h1 id="case-title" class="page-title">GenAI Guidelines for Supporting Small Instagram Creators</h1>
-          <p class="page-subtitle">Research and design recommendations for trust, fairness, and platform transparency.</p>
-          <nav class="case-section-nav" aria-label="Jump to case study sections">
-            <a class="is-active" href="#context-people">Context &amp; People</a>
-            <a href="#method-rationale">My Method &amp; Rationale</a>
-            <a href="#findings-impact">Key Findings &amp; Impact</a>
-            <a href="#reflection-next">Reflection &amp; Next Steps</a>
+          <nav class="case-nav-tree" aria-label="Project navigation">
+            <p class="case-nav-label">Projects</p>
+            <div class="case-project-list">
+              <a href="/case-studies/flowguard.html" class="case-project-link">FlowGuard</a>
+              <a href="/case-studies/carmen.html" class="case-project-link">CARMEN</a>
+              <a href="/case-studies/accommodation-llm.html" class="case-project-link">Disability Accommodation LLM</a>
+              <a href="/case-studies/artists-vs-ai.html" class="case-project-link is-active" aria-current="page">Artists vs AI</a>
+              <nav class="case-section-nav" aria-label="Jump to Artists vs AI sections">
+                <a class="is-active" href="#context-people">Context &amp; People</a>
+                <a href="#contribution">My Contributions</a>
+                <a href="#insights">Key Insights</a>
+                <a href="#design-directions">Design Directions</a>
+                <a href="#reflection-next">Reflection &amp; Next Steps</a>
+              </nav>
+              <a href="/case-studies/healthcare-map.html" class="case-project-link">Healthcare Interactive Model</a>
+            </div>
           </nav>
         </section>
 
-        <section class="case-hero-media" aria-label="Project overview media">
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for creators research overview">
-            Placeholder image for project overview
-          </div>
-        </section>
+        <div class="case-content">
+          <section class="case-intro" aria-labelledby="case-title">
+            <div class="case-title-row">
+              <span class="case-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 17c4.5-7 11-10.5 16-11" />
+                  <path d="M5 8.5c1.7-.8 3.7-1.2 5.8-1.2" />
+                  <path d="M9 19c2.5-2.1 5-3.6 8.5-4.8" />
+                  <path d="M17 8.5c.9.7 1.8 1.7 2.5 3" />
+                </svg>
+              </span>
+              <h1 id="case-title" class="page-title">Artists vs AI: Creator Protection &amp; AI Transparency Research</h1>
+            </div>
+            <p class="page-subtitle"><strong>Research on creator trust, ownership, and platform responsibility in generative AI</strong></p>
+            <figure class="case-hero-figure case-hero-figure-artists">
+              <img
+                src="/case-studies/ArtistsVsAI.png"
+                alt="A seemingly AI generated man and a woman who looks at him suspiciously, illustrating the artist vs AI dynamic."
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+            <dl class="case-summary" aria-label="Project snapshot">
+              <div class="case-summary-item">
+                <dt>My Role</dt>
+                <dd>Led end-to-end research, including study design, interviews, synthesis, and model creation</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>My Team</dt>
+                <dd>5 researchers (Team SEEEC)</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Timeline</dt>
+                <dd>Aug 2025 &ndash; Dec 2025</dd>
+              </div>
+            </dl>
+            <div class="case-summary-overview">
+              <p class="case-subsection-label">Summary</p>
+              <p class="case-summary-lead">
+                Identified how lack of transparency and consent drives mistrust, informing platform-level design for
+                ethical AI and creator protection.
+              </p>
+            </div>
+          </section>
 
-        <section class="case-section" aria-labelledby="context-people">
-          <h2 id="context-people">Context &amp; People</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for context and stakeholder insights">
-            Placeholder image for context and people
-          </div>
-          <p>
-            This research explored how small content creators experience algorithmic bias, visibility uncertainty, and
-            platform opacity. Stakeholders included independent artists and creators whose income and exposure depend
-            on algorithmic systems.
-          </p>
-          <p>
-            A key pain point was the lack of transparency and perceived unfairness in AI-driven content distribution.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="context-people">
+            <h2 id="context-people">Context &amp; People</h2>
+            <p>
+              Small Instagram artists rely on the platform for visibility, identity, and income. The rise of
+              generative AI has disrupted this ecosystem.
+            </p>
+            <p>
+              <strong>Artists feel their work is being used without consent</strong>, leading to deep mistrust in both
+              AI systems and platforms.
+            </p>
+            <p>
+              At the same time, <strong>artists hold nuanced, often conflicting views</strong>, balancing curiosity
+              about AI with fear of exploitation, replacement, and loss of authorship.
+            </p>
+            <p>Community norms, peers, and institutions strongly shape how artists express or suppress these views.</p>
+          </section>
 
-        <section class="case-section" aria-labelledby="method-rationale">
-          <h2 id="method-rationale">My Method &amp; Rationale</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for methods and rationale">
-            Placeholder image for method and rationale
-          </div>
-          <p>
-            I conducted mixed-method research combining qualitative analysis of creator experiences with evaluation of
-            AI auditing tools. This approach allowed me to capture both subjective trust perceptions and broader
-            behavioral patterns.
-          </p>
-          <p>
-            The goal was to produce actionable insights rather than purely theoretical critiques of AI bias.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="contribution">
+            <h2 id="contribution">My Contributions</h2>
+            <p>
+              I conducted 45-60 minute contextual interviews with 10 small Instagram artists and synthesized 200+
+              interpretation notes into affinity diagrams and cultural models.
+            </p>
+            <div class="case-media-pair case-media-pair-artists-research">
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/ArtistVsAI_CulturalModel.png"
+                  alt="Cultural model mapping how artists' attitudes toward AI are socially constructed."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case-media-caption">
+                  Cultural model mapping how artists&rsquo; attitudes toward AI are socially constructed; this model
+                  shows how conflicting signals from community, platforms, and industry drive polarization and
+                  uncertainty.
+                </figcaption>
+              </figure>
+              <figure class="case-inline-media">
+                <img
+                  src="/case-studies/ArtistVsAI_EmpathyMap.jpg"
+                  alt="Empathy map highlighting artists' lived experience with AI."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case-media-caption">
+                  Empathy map capturing artists&rsquo; lived experience, highlighting tensions between curiosity and
+                  fear, and the need for trust, control, and recognition.
+                </figcaption>
+              </figure>
+            </div>
+            <p>
+              Using directed storytelling, I captured how artists experience AI in real contexts, moments of
+              excitement, fear, conflict, and adaptation.
+            </p>
+            <figure class="case-inline-media case-inline-media-artists-affinity">
+              <img
+                src="/case-studies/ArtistVsAI_AffinityClustering.jpg"
+                alt="Affinity clustering of interview data about artists and AI."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Affinity clustering of interview data revealing key tensions: exploitation vs. curiosity, visibility
+                vs. authenticity, and individual vs. platform responsibility.
+              </figcaption>
+            </figure>
+            <p>I translated these insights into system-level design recommendations focused on:</p>
+            <ul class="case-bullet-list">
+              <li><strong>Transparency</strong> (clear AI labeling, training disclosure)</li>
+              <li><strong>Creator protection</strong> (style ownership, anti-scraping mechanisms)</li>
+              <li><strong>Platform accountability</strong> (policy + enforcement)</li>
+              <li><strong>Community dynamics</strong> (norms, stigma, discourse spaces)</li>
+            </ul>
+          </section>
 
-        <section class="case-section" aria-labelledby="findings-impact">
-          <h2 id="findings-impact">Key Findings &amp; Impact</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for key findings and impact">
-            Placeholder image for findings and impact
-          </div>
-          <p>
-            Findings revealed that creators experienced emotional stress and strategic uncertainty due to opaque
-            algorithm behavior. Clearer feedback systems and transparency mechanisms were identified as key UX
-            opportunities.
-          </p>
-          <p>
-            The project resulted in business and product recommendations aimed at improving trust, fairness
-            perception, and platform usability for smaller creators.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="insights">
+            <h2 id="insights">Key Insights</h2>
+            <p>Flip through our online zine for a deeper dive into our research!</p>
+            <div class="case-embed-frame-wrap">
+              <iframe
+                class="case-embed-frame"
+                src="https://heyzine.com/flip-book/d90f80abff.html"
+                title="Artists vs AI flipbook"
+                loading="lazy"
+                allowfullscreen
+              ></iframe>
+              <p class="case-embed-fallback">
+                If the flipbook does not load here, open it directly at
+                <a href="https://heyzine.com/flip-book/d90f80abff.html" target="_blank" rel="noopener noreferrer">Heyzine</a>.
+              </p>
+            </div>
+            <ul class="case-bullet-list">
+              <li>
+                <strong>Transparency is the foundation of trust</strong>
+                Artists constantly verify whether content is AI-generated, creating cognitive burden and distrust.
+              </li>
+              <li>
+                <strong>Artists hold nuanced, but hidden, opinions on AI</strong>
+                Many feel forced into polarized pro-AI or anti-AI positions despite more complex beliefs.
+              </li>
+              <li>
+                <strong>AI threatens identity, not just labor</strong>
+                Beyond economic concerns, artists fear losing authorship, style ownership, and meaning in their work.
+              </li>
+              <li>
+                <strong>Self-protection is unsustainable</strong>
+                Watermarking and defensive tools are inconsistent and place burden on artists rather than systems.
+              </li>
+              <li>
+                <strong>Human creativity is still deeply valued</strong>
+                Artists emphasize process, intention, and effort as what gives art meaning, not just output.
+              </li>
+            </ul>
+          </section>
 
-        <section class="case-section" aria-labelledby="reflection-next">
-          <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for reflection and next steps">
-            Placeholder image for reflection and next steps
-          </div>
-          <p>
-            This project deepened my understanding of AI ethics, user trust, and platform accountability. I improved
-            my mixed-method analysis and stakeholder communication skills.
-          </p>
-          <p>
-            If expanded, I would conduct comparative studies across multiple platforms and test prototype transparency
-            features with real creators.
-          </p>
-        </section>
+          <section class="case-section case-section-split" aria-labelledby="design-directions">
+            <div class="case-section-copy">
+              <h2 id="design-directions">Design Directions</h2>
+              <ul class="case-bullet-list">
+                <li>
+                  <strong>AI Transparency Infrastructure</strong>
+                  Automatic labeling of AI-generated or AI-assisted content. Disclosure of training sources and artist
+                  inclusion.
+                </li>
+                <li>
+                  <strong>Creator Protection Systems</strong>
+                  Style protection, opt-in training, anti-scraping tools.
+                </li>
+                <li>
+                  <strong>Platform Governance</strong>
+                  Clear policies for AI usage, attribution, and disclosure.
+                </li>
+                <li>
+                  <strong>Community Support Mechanisms</strong>
+                  Spaces for nuanced discussion without stigma. Features that highlight human creative process.
+                </li>
+              </ul>
+            </div>
+            <figure class="case-section-media case-section-media-artists-directions">
+              <img
+                src="/case-studies/ArtistVsAI_DesignDirections.png"
+                alt="Design directions for AI builders and social media platforms to support artists."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Design directions for social media and other AI builders to empower artists with AI, including
+                transparency, protection, inclusiveness.
+              </figcaption>
+            </figure>
+          </section>
+
+          <section class="case-section" aria-labelledby="reflection-next">
+            <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
+            <p>
+              This project strengthened my ability to study complex sociotechnical systems where technology, identity,
+              and power intersect.
+            </p>
+            <p>
+              Next steps include prototyping platform features, such as AI labels and style protection tools, and
+              testing them with artist communities in real-world contexts.
+            </p>
+          </section>
+        </div>
       </main>
 
       <footer class="universal-footer" aria-labelledby="universal-footer-quote">
@@ -120,9 +273,9 @@
           <nav class="universal-footer-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
             <a href="/#impact-anchor">Work</a>
-            <a href="/#about">About Me</a>
+            <a href="/#about-home-title">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-no-highlight">Resume</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact-home-title">Contact</a>
           </nav>
           <ul class="universal-footer-icons" aria-label="External links">
             <li><a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" /></svg></a></li>

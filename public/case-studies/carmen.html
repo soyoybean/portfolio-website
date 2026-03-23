@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CARMEN — Cognitively Assistive Robot | Case Study</title>
+    <title>CARMEN — Cognitively Assistive Robot for Motivation & Neurorehabilitation | Case Study</title>
     <link rel="icon" href="/egg_icon.png" type="image/png" />
     <link rel="alternate icon" href="/egg_icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/page-shell.css" />
     <script src="/page-shell.js" defer></script>
   </head>
-  <body>
+  <body class="case-study-carmen">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="container nav-layout">
         <a class="brand" href="/" aria-label="Return to Home">
@@ -21,11 +22,11 @@
           <nav class="primary-nav" aria-label="Primary">
             <a href="/" data-nav="home">Home</a>
             <a href="/#impact-anchor" data-nav="work" aria-current="page">Work</a>
-            <a href="/#about" data-nav="about">About Me</a>
+            <a href="/#about-home-title" data-nav="about">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" data-nav="resume" class="nav-no-highlight">Resume</a>
-            <a href="/#contact" data-nav="contact">Contact</a>
+            <a href="/#contact-home-title" data-nav="contact">Contact</a>
           </nav>
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
+          <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
             <img src="/icons/sun-placeholder.svg" alt="" aria-hidden="true" data-theme-icon />
             <span class="sr-only">Toggle theme</span>
           </button>
@@ -34,86 +35,218 @@
     </header>
 
     <div class="page-wrap">
-      <main class="container case-main" aria-labelledby="case-title">
+      <main id="main-content" class="container case-main" aria-labelledby="case-title" tabindex="-1">
         <section class="case-header">
-          <h1 id="case-title" class="page-title">CARMEN — Cognitively Assistive Robot</h1>
-          <p class="page-subtitle">Home-based neurorehabilitation support with dignity-centered interaction design.</p>
-          <nav class="case-section-nav" aria-label="Jump to case study sections">
-            <a class="is-active" href="#context-people">Context &amp; People</a>
-            <a href="#method-rationale">My Method &amp; Rationale</a>
-            <a href="#findings-impact">Key Findings &amp; Impact</a>
-            <a href="#reflection-next">Reflection &amp; Next Steps</a>
+          <nav class="case-nav-tree" aria-label="Project navigation">
+            <p class="case-nav-label">Projects</p>
+            <div class="case-project-list">
+              <a href="/case-studies/flowguard.html" class="case-project-link">FlowGuard</a>
+              <a href="/case-studies/carmen.html" class="case-project-link is-active" aria-current="page">CARMEN</a>
+              <nav class="case-section-nav" aria-label="Jump to CARMEN sections">
+                <a class="is-active" href="#context-people">Context &amp; People</a>
+                <a href="#contribution">My Contribution</a>
+                <a href="#findings-impact">Key Findings &amp; Impact</a>
+                <a href="#publications">Publications</a>
+                <a href="#reflection-next">Reflection &amp; Next Steps</a>
+              </nav>
+              <a href="/case-studies/accommodation-llm.html" class="case-project-link">Disability Accommodation LLM</a>
+              <a href="/case-studies/artists-vs-ai.html" class="case-project-link">Artists vs AI</a>
+              <a href="/case-studies/healthcare-map.html" class="case-project-link">Healthcare Interactive Model</a>
+            </div>
           </nav>
         </section>
 
-        <section class="case-hero-media" aria-label="Project overview media">
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for CARMEN overview">
-            Placeholder image for project overview
-          </div>
-        </section>
+        <div class="case-content">
+          <section class="case-intro" aria-labelledby="case-title">
+            <div class="case-title-row">
+              <span class="case-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4v16M8 8c1.4 0 2.6.8 4 2 1.4-1.2 2.6-2 4-2M8 16c1.4 0 2.6-.8 4-2 1.4 1.2 2.6 2 4 2" />
+                </svg>
+              </span>
+              <h1 id="case-title" class="page-title">CARMEN (Cognitively Assistive Robot for Motivation &amp; Neurorehabilitation)</h1>
+            </div>
+            <p class="page-subtitle">Cognitively assistive robot for home-based neurorehabilitation and motivation</p>
+            <figure class="case-hero-figure case-hero-figure-carmen">
+              <img
+                src="/case-studies/CARMEN_1.png"
+                alt="Person with mild cognitive impairment playing the color game with support from CARMEN."
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Person with mild cognitive impairment playing the color game under CARMEN&rsquo;s guidance
+              </figcaption>
+            </figure>
+            <dl class="case-summary">
+              <div class="case-summary-item">
+                <dt>My Role</dt>
+                <dd>Co-design &amp; Participatory research</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Team</dt>
+                <dd>3 Researchers, 2 Designers</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Timeline</dt>
+                <dd>Aug 2020 &ndash; May 2023</dd>
+              </div>
+            </dl>
+            <div class="case-summary-overview">
+              <p class="case-subsection-label">Summary</p>
+              <p class="case-summary-lead">
+                <strong>Translated clinical interventions into robot interaction design</strong>, enabling
+                collaborative goal-setting, personalization, and sustained engagement in real-world care.
+              </p>
+            </div>
+          </section>
 
-        <section class="case-section" aria-labelledby="context-people">
-          <h2 id="context-people">Context &amp; People</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for context and stakeholder insights">
-            Placeholder image for context and people
-          </div>
-          <p>
-            CARMEN focused on supporting people with Mild Cognitive Impairment in home-based neurorehabilitation and
-            motivation routines. Stakeholders included patients, caregivers, and clinicians.
-          </p>
-          <p>
-            A major challenge was designing assistive technology that motivates without feeling intrusive,
-            patronizing, or overly controlling in intimate home environments.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="context-people">
+            <h2 id="context-people">Context &amp; People</h2>
+            <p>
+              CARMEN supports people with Mild Cognitive Impairment (PwMCI) through home-based neurorehabilitation.
+            </p>
+            <figure class="case-inline-media case-inline-media-carmen-context">
+              <img
+                src="/case-studies/CARMEN_2.png"
+                alt="CARMEN deployed in a home neurorehabilitation context with a person with mild cognitive impairment."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Another person with mild cognitive impairment playing the number game under CARMEN&rsquo;s guidance
+              </figcaption>
+            </figure>
+            <p>
+              A core challenge was translating clinician-led cognitive training into autonomous robot interactions that
+              <strong>motivate without becoming intrusive, controlling, or patronizing</strong> in intimate home
+              environments.
+            </p>
+            <p>
+              Existing research provides limited guidance on how to adapt clinical interventions for
+              <strong>long-term, real-world deployment</strong>.
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="method-rationale">
-          <h2 id="method-rationale">My Method &amp; Rationale</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for methods and rationale">
-            Placeholder image for method and rationale
-          </div>
-          <p>
-            I conducted participatory co-design sessions and in-depth interviews to capture lived experiences and
-            emotional responses to assistive technologies. Grounded qualitative analysis was used to identify
-            recurring themes and translate them into design implications.
-          </p>
-          <p>
-            This approach was chosen because traditional lab-only testing would not capture the complexity of
-            home-based care dynamics.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="contribution">
+            <h2 id="contribution">My Contribution</h2>
+            <ul class="case-bullet-list">
+              <li>
+                Led <strong>live co-design</strong> with PwMCI, caregivers, and clinicians to translate clinical practices into robot interaction behaviors
+                <figure class="case-inline-media case-inline-media-carmen-codesign">
+                  <img
+                    src="/case-studies/CARMEN_CoDesign.png"
+                    alt="Real-time co-design sketches made during interviews with clinicians and people with mild cognitive impairment."
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="case-media-caption">
+                    Real-time co-design sketches I made during interviews with clinicians and people with mild cognitive impairment
+                  </figcaption>
+                </figure>
+              </li>
+              <li>Conducted interviews and participatory sessions, synthesizing findings using grounded theory</li>
+              <li>
+                Developed <strong>design patterns and interaction principles</strong> for:
+                <ul class="case-sub-bullet-list">
+                  <li><strong>collaborative goal-setting</strong></li>
+                  <li><strong>assistive robot behavior personalization</strong></li>
+                  <li><strong>sustained engagement</strong></li>
+                </ul>
+              </li>
+              <li>Informed how the robot adapts to PwMCI motivation, routines, and cognitive needs over time</li>
+            </ul>
+          </section>
 
-        <section class="case-section" aria-labelledby="findings-impact">
-          <h2 id="findings-impact">Key Findings &amp; Impact</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for key findings and impact">
-            Placeholder image for findings and impact
-          </div>
-          <p>
-            Findings showed that users preferred collaborative goal-setting and emotionally supportive interaction
-            styles over directive robotic behavior. These insights informed design patterns for cognitively assistive
-            robots that prioritize dignity, agency, and personalization.
-          </p>
-          <p>
-            The work contributed to research publications and broader discussions on ethical assistive robotics
-            design.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="findings-impact">
+            <h2 id="findings-impact">Key Findings &amp; Impact</h2>
+            <ul class="case-bullet-list">
+              <li>
+                <strong>Collaborative goal-setting drives adherence</strong>
+                PwMCI engaged more when goals were co-created and personally meaningful
+              </li>
+              <li>
+                <strong>Personalization must reflect real-life routines</strong>
+                Embedding interventions in daily contexts improved adoption and long-term use
+              </li>
+              <li>
+                <strong>Supportive, non-judgmental interaction builds trust</strong>
+                PwMCI preferred encouragement and effort-based feedback over directive or evaluative behavior
+              </li>
+              <li>
+                <strong>Bridging clinic &rarr; real-world use is critical</strong>
+                Systems must help PwMCI apply cognitive strategies beyond structured sessions
+              </li>
+            </ul>
+            <p>
+              This work contributed to <strong>peer-reviewed publications</strong> and established design foundations
+              for cognitively assistive robots deployed in home environments.
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="reflection-next">
-          <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for reflection and next steps">
-            Placeholder image for reflection and next steps
-          </div>
-          <p>
-            I developed strong skills in co-design facilitation, qualitative synthesis, and stakeholder-sensitive
-            research. I also learned how to communicate complex findings to multidisciplinary teams.
-          </p>
-          <p>
-            If revisiting the project, I would incorporate more iterative prototype testing in real home
-            environments. Future directions include integrating adaptive personalization based on user motivation
-            patterns.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="publications">
+            <h2 id="publications">Publications</h2>
+            <ul class="case-publication-list">
+              <li>
+                <a class="case-paper-button" href="/case-studies/HRI2022_CARMEN.pdf" target="_blank" rel="noopener noreferrer">
+                  <span class="case-paper-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 3h7l5 5v13H7z" />
+                      <path d="M14 3v5h5" />
+                      <path d="M9 12h6M9 16h6" />
+                    </svg>
+                  </span>
+                  <span class="case-paper-copy">
+                    <strong>ACM/IEEE International Conference on Human-Robot Interaction (HRI), 2022</strong>
+                    <span>Design patterns for translating clinical interventions into robot behaviors</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a class="case-paper-button" href="/case-studies/Alzheimers2022_CARMEN.pdf" target="_blank" rel="noopener noreferrer">
+                  <span class="case-paper-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 3h7l5 5v13H7z" />
+                      <path d="M14 3v5h5" />
+                      <path d="M9 12h6M9 16h6" />
+                    </svg>
+                  </span>
+                  <span class="case-paper-copy">
+                    <strong>Alzheimer&rsquo;s &amp; Dementia (Journal) 2022</strong>
+                    <span>Requirements for longitudinal, home-based neurorehabilitation systems</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a class="case-paper-button" href="/case-studies/HRI2023_CARMEN.pdf" target="_blank" rel="noopener noreferrer">
+                  <span class="case-paper-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 3h7l5 5v13H7z" />
+                      <path d="M14 3v5h5" />
+                      <path d="M9 12h6M9 16h6" />
+                    </svg>
+                  </span>
+                  <span class="case-paper-copy">
+                    <strong>ACM/IEEE International Conference on Human-Robot Interaction (HRI), 2023</strong>
+                    <span>Framework for robot-supported collaborative goal-setting</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="case-section" aria-labelledby="reflection-next">
+            <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
+            <p>
+              This project reshaped my approach to assistive design, from optimizing task completion to designing
+              for <strong>long-term dignity, motivation, and real-world integration</strong>.
+            </p>
+            <p>
+              Future work includes expanding in-home longitudinal testing and developing adaptive systems that respond
+              to evolving user motivation and cognitive needs.
+            </p>
+          </section>
+        </div>
       </main>
 
       <footer class="universal-footer" aria-labelledby="universal-footer-quote">
@@ -122,9 +255,9 @@
           <nav class="universal-footer-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
             <a href="/#impact-anchor">Work</a>
-            <a href="/#about">About Me</a>
+            <a href="/#about-home-title">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-no-highlight">Resume</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact-home-title">Contact</a>
           </nav>
           <ul class="universal-footer-icons" aria-label="External links">
             <li><a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" /></svg></a></li>

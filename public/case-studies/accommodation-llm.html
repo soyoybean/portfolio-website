@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/page-shell.css" />
     <script src="/page-shell.js" defer></script>
   </head>
-  <body>
+  <body class="case-study-accommodation">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="container nav-layout">
         <a class="brand" href="/" aria-label="Return to Home">
@@ -21,11 +22,11 @@
           <nav class="primary-nav" aria-label="Primary">
             <a href="/" data-nav="home">Home</a>
             <a href="/#impact-anchor" data-nav="work" aria-current="page">Work</a>
-            <a href="/#about" data-nav="about">About Me</a>
+            <a href="/#about-home-title" data-nav="about">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" data-nav="resume" class="nav-no-highlight">Resume</a>
-            <a href="/#contact" data-nav="contact">Contact</a>
+            <a href="/#contact-home-title" data-nav="contact">Contact</a>
           </nav>
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
+          <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">
             <img src="/icons/sun-placeholder.svg" alt="" aria-hidden="true" data-theme-icon />
             <span class="sr-only">Toggle theme</span>
           </button>
@@ -34,89 +35,180 @@
     </header>
 
     <div class="page-wrap">
-      <main class="container case-main" aria-labelledby="case-title">
+      <main id="main-content" class="container case-main" aria-labelledby="case-title" tabindex="-1">
         <section class="case-header">
-          <h1 id="case-title" class="page-title">DISABILITY ACCOMMODATION ADVOCACY LLM</h1>
-          <p class="page-subtitle">Responsible AI support for disability advocacy communication workflows.</p>
-          <nav class="case-section-nav" aria-label="Jump to case study sections">
-            <a class="is-active" href="#context-people">Context &amp; People</a>
-            <a href="#method-rationale">My Method &amp; Rationale</a>
-            <a href="#findings-impact">Key Findings &amp; Impact</a>
-            <a href="#reflection-next">Reflection &amp; Next Steps</a>
+          <nav class="case-nav-tree" aria-label="Project navigation">
+            <p class="case-nav-label">Projects</p>
+            <div class="case-project-list">
+              <a href="/case-studies/flowguard.html" class="case-project-link">FlowGuard</a>
+              <a href="/case-studies/carmen.html" class="case-project-link">CARMEN</a>
+              <a href="/case-studies/accommodation-llm.html" class="case-project-link is-active" aria-current="page">Disability Accommodation LLM</a>
+              <nav class="case-section-nav" aria-label="Jump to Disability Accommodation LLM sections">
+                <a class="is-active" href="#context-people">Context &amp; People</a>
+                <a href="#contributions">My Contributions</a>
+                <a href="#key-findings">Key Findings</a>
+                <a href="#design-implications">Design Implications</a>
+                <a href="#impact">Impact</a>
+                <a href="#reflection-next">Reflection &amp; Next Steps</a>
+              </nav>
+              <a href="/case-studies/artists-vs-ai.html" class="case-project-link">Artists vs AI</a>
+              <a href="/case-studies/healthcare-map.html" class="case-project-link">Healthcare Interactive Model</a>
+            </div>
           </nav>
         </section>
 
-        <section class="case-hero-media" aria-label="Project overview media">
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for accommodation LLM overview">
-            Placeholder image for project overview
-          </div>
-        </section>
+        <div class="case-content">
+          <section class="case-intro" aria-labelledby="case-title">
+            <div class="case-title-row">
+              <span class="case-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 6h12v12H6z" />
+                  <path d="M9 9h6M9 12h4M9 15h6" />
+                </svg>
+              </span>
+              <h1 id="case-title" class="page-title">Disability Accommodation Advocacy LLM</h1>
+            </div>
+            <p class="page-subtitle"><strong>AI system supporting students in navigating disability accommodation requests</strong></p>
+            <figure class="case-hero-figure case-hero-figure-accommodation">
+              <img
+                src="/case-studies/DisabilityLLM_1.png"
+                alt="LLM chat interface for helping students draft disability-related accommodation request forms."
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                The LLM chat interface, where students can ask an LLM agent to help draft their disability-related accommodations request form
+              </figcaption>
+            </figure>
+            <dl class="case-summary">
+              <div class="case-summary-item">
+                <dt>My Role</dt>
+                <dd>Led research, study design, and synthesis</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>My Team</dt>
+                <dd>1 researcher, 1 designer, 1 engineer</dd>
+              </div>
+              <div class="case-summary-item">
+                <dt>Timeline</dt>
+                <dd>August-December 2025</dd>
+              </div>
+            </dl>
+            <div class="case-summary-overview">
+              <p class="case-subsection-label">Summary</p>
+              <p class="case-summary-lead">
+                Reduced writing burden while revealing <strong>critical tensions around trust, over-disclosure, and
+                user control</strong> in high-stakes communication.
+              </p>
+            </div>
+          </section>
 
-        <section class="case-section" aria-labelledby="context-people">
-          <h2 id="context-people">Context &amp; People</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for context and stakeholder insights">
-            Placeholder image for context and people
-          </div>
-          <p>
-            This project addressed the experiences of students with academic accommodation needs who often face
-            emotional, bureaucratic, and communication barriers when advocating for themselves. Stakeholders included
-            students with disabilities, institutional staff, and educators.
-          </p>
-          <p>
-            A major pain point was the psychological burden and uncertainty in formal communication processes, where
-            students feared stigma, misunderstanding, or rejection.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="context-people">
+            <h2 id="context-people">Context &amp; People</h2>
+            <p>
+              Students seeking disability accommodations must communicate personal, often sensitive needs in formal
+              institutional settings. This process introduces not only logistical complexity, but also emotional and
+              psychological burden.
+            </p>
+            <p>
+              <strong>Students navigate vulnerability, stigma, and uncertainty</strong> when drafting requests, often
+              without clear guidance on tone, level of disclosure, or expectations.
+            </p>
+            <p>
+              As a result, many experience hesitation, overthinking, or avoidance, turning what should be a support
+              system into a barrier to access.
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="method-rationale">
-          <h2 id="method-rationale">My Method &amp; Rationale</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for methods and rationale">
-            Placeholder image for method and rationale
-          </div>
-          <p>
-            I led usability-focused research using scenario-based tasks and qualitative interviews to evaluate how
-            users interacted with an AI advocacy assistant. The rationale for this approach was that sensitive
-            institutional communication requires understanding emotional trust, not just task completion metrics.
-          </p>
-          <p>
-            I focused on evaluating user perceptions of control, privacy, and psychological safety when interacting
-            with AI-generated advocacy support.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="contributions">
+            <h2 id="contributions">My Contributions</h2>
+            <p>
+              I led the research and evaluation of an LLM-based advocacy assistant designed to support students in
+              drafting accommodation requests.
+            </p>
+            <p>
+              The system provides a private, low-stakes space for users to externalize their needs, structure
+              communication, and iteratively refine their writing before sharing with institutional stakeholders.
+            </p>
+            <p>
+              Through scenario-based usability testing, think-aloud protocols, and interviews, I examined how AI
+              support shaped <strong>cognitive load, user control, trust, and psychological safety</strong> in
+              high-stakes communication.
+            </p>
+          </section>
 
-        <section class="case-section" aria-labelledby="findings-impact">
-          <h2 id="findings-impact">Key Findings &amp; Impact</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for key findings and impact">
-            Placeholder image for findings and impact
-          </div>
-          <p>
-            Key findings revealed that users preferred AI assistance that enhanced clarity and confidence without
-            removing personal agency. Overly automated messaging reduced trust, while customizable outputs increased
-            perceived empowerment.
-          </p>
-          <p>
-            These insights informed design recommendations for ethical AI systems in sensitive contexts, particularly
-            around transparency, consent, and tone control. The project contributed to research on responsible AI and
-            human-centered support tools in institutional settings.
-          </p>
-        </section>
+          <section class="case-section case-section-split" aria-labelledby="key-findings">
+            <div class="case-section-copy">
+              <h2 id="key-findings">Key Findings</h2>
+              <p>
+                <strong>AI reduces cognitive and emotional burden</strong><br />
+                Participants described writing as significantly easier, helping them move past hesitation and mental
+                blocks.
+              </p>
+              <p>
+                <strong>Over-automation undermines trust</strong><br />
+                Users were uncomfortable when the system introduced assumptions or overly personal details.
+              </p>
+              <p>
+                <strong>Control is critical for adoption</strong><br />
+                Participants preferred AI as a support tool, not a replacement, maintaining authorship over their own
+                narrative.
+              </p>
+              <p>
+                <strong>Social context matters more than correctness</strong><br />
+                Even well-written outputs failed when tone or audience awareness felt inappropriate.
+              </p>
+              <p>
+                <strong>AI cannot resolve systemic stigma</strong><br />
+                While the tool reduced effort, users still feared judgment from institutional stakeholders.
+              </p>
+            </div>
+            <figure class="case-section-media case-section-media-accommodation-findings">
+              <img
+                src="/case-studies/DisabilityLLM_2.png"
+                alt="Student personalizing the LLM agent characteristics."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="case-media-caption">
+                Student can personalize the LLM agent&rsquo;s characteristics
+              </figcaption>
+            </figure>
+          </section>
 
-        <section class="case-section" aria-labelledby="reflection-next">
-          <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
-          <div class="placeholder-image" role="img" aria-label="Placeholder image for reflection and next steps">
-            Placeholder image for reflection and next steps
-          </div>
-          <p>
-            This project strengthened my ability to research ethically sensitive topics and communicate findings in
-            psychologically nuanced contexts. I learned the importance of balancing automation with user autonomy in
-            AI systems.
-          </p>
-          <p>
-            If I were to improve the study, I would include longitudinal testing to observe real-world adoption
-            behavior. Future steps include expanding evaluation across diverse institutional contexts to test
-            scalability and inclusivity.
-          </p>
-        </section>
+          <section class="case-section" aria-labelledby="design-implications">
+            <h2 id="design-implications">Design Implications</h2>
+            <p>Designing AI for sensitive communication requires more than accuracy or efficiency.</p>
+            <ul class="case-bullet-list">
+              <li>Prioritize <strong>psychological safety over automation</strong></li>
+              <li>Enable <strong>user-controlled disclosure</strong></li>
+              <li>Support <strong>audience-aware communication</strong></li>
+              <li>Allow <strong>adjustable levels of AI assistance</strong></li>
+              <li>Make system behavior and limitations transparent</li>
+            </ul>
+          </section>
+
+          <section class="case-section" aria-labelledby="impact">
+            <h2 id="impact">Impact</h2>
+            <p>
+              This work demonstrates how AI can meaningfully reduce the burden of self-advocacy while also introducing
+              new risks around trust and autonomy.
+            </p>
+            <p>
+              It contributes design guidance for building
+              <strong> responsible AI systems in high-stakes, human-centered contexts</strong>.
+            </p>
+          </section>
+
+          <section class="case-section" aria-labelledby="reflection-next">
+            <h2 id="reflection-next">Reflection &amp; Next Steps</h2>
+            <p>This project strengthened my ability to design and evaluate AI systems in emotionally complex settings.</p>
+            <p>
+              Moving forward, I would focus on longitudinal deployment in real institutional workflows and expand
+              evaluation across diverse user populations to better understand real-world adoption.
+            </p>
+          </section>
+        </div>
       </main>
 
       <footer class="universal-footer" aria-labelledby="universal-footer-quote">
@@ -125,9 +217,9 @@
           <nav class="universal-footer-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
             <a href="/#impact-anchor">Work</a>
-            <a href="/#about">About Me</a>
+            <a href="/#about-home-title">About Me</a>
             <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-no-highlight">Resume</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact-home-title">Contact</a>
           </nav>
           <ul class="universal-footer-icons" aria-label="External links">
             <li><a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" /></svg></a></li>

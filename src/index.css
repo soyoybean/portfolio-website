@@ -6,6 +6,7 @@
 
   --space-4: 4px;
   --space-8: 8px;
+  --space-10: 10px;
   --space-12: 12px;
   --space-16: 16px;
   --space-20: 20px;
@@ -27,7 +28,7 @@
   --font-body: 18px;
   --font-small: 16px;
 
-  --focus-ring: 3px solid #1459d9;
+  --focus-ring: 2px solid #f4c430;
 
   color-scheme: light;
   font-synthesis: none;
