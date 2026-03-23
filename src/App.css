@@ -1125,7 +1125,7 @@
 
   .theme-toggle {
     width: 48px;
-    height: 30px;
+    min-height: 44px;
   }
 
   .nav-toggle {
@@ -1152,6 +1152,8 @@
     width: 100%;
     min-height: 44px;
     justify-content: center;
+    white-space: normal;
+    padding-inline: 14px;
   }
 
   .pillar-tablist {
@@ -1165,6 +1167,57 @@
   .project-tabpanel {
     min-height: auto;
     margin-top: var(--space-12);
+  }
+
+  .project-focus-card,
+  .about-home-layout,
+  .accessibility-home-layout,
+  .contact-home-layout {
+    padding: var(--space-16);
+  }
+
+  .project-focus-media {
+    width: min(100%, 260px);
+  }
+
+  .home-link-list,
+  .social-list,
+  .footer-nav {
+    gap: var(--space-8);
+  }
+
+  .home-link-list li,
+  .social-list li {
+    width: 100%;
+  }
+
+  .home-link-list a,
+  .social-list a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-copy h1 {
+    font-size: clamp(2.4rem, 10vw, 3rem);
+  }
+
+  .hero-titleline {
+    font-size: clamp(1.4rem, 6.2vw, 1.8rem);
+  }
+
+  .hero-subline {
+    font-size: clamp(1.05rem, 4.6vw, 1.2rem);
+  }
+
+  .project-focus-media {
+    width: min(100%, 220px);
+  }
+
+  .footer-nav a,
+  .primary-nav a {
+    width: 100%;
   }
 }
 

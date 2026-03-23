@@ -2265,6 +2265,11 @@ main {
 }
 
 @media (max-width: 640px) {
+  .container,
+  .case-main.container {
+    width: min(calc(100% - 2 * var(--space-16)), var(--max-width));
+  }
+
   .page-title {
     font-size: clamp(1.08rem, 3.7vw, 1.32rem);
     white-space: normal;
@@ -2289,6 +2294,13 @@ main {
 
   .case-summary {
     padding: var(--space-12);
+  }
+
+  .case-header,
+  .case-intro,
+  .case-hero-media,
+  .case-section {
+    padding: var(--space-16);
   }
 
   .case-timeline {
