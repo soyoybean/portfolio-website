@@ -415,6 +415,8 @@
 }
 
 .work-panel-shell {
+  --project-pill-font: clamp(0.98rem, 1.02vw, 1.08rem);
+  --category-pill-font: clamp(1.22rem, 1.28vw, 1.35rem);
   border: 1px solid var(--border);
   border-radius: 24px;
   background: var(--surface);
@@ -447,11 +449,12 @@
   width: 100%;
   min-height: 44px;
   min-width: 0;
-  padding: 10px 16px;
+  padding: 10px 14px;
   text-align: center;
   white-space: nowrap;
   cursor: pointer;
   font: inherit;
+  font-size: var(--category-pill-font);
   transition:
     background-color 170ms ease,
     border-color 170ms ease,
@@ -494,12 +497,13 @@
   min-width: fit-content;
   justify-self: end;
   font-weight: 700;
+  font-size: var(--category-pill-font);
 }
 
 .pillar-tab-label {
-  font-size: inherit;
+  font-size: 1em;
   font-weight: 700;
-  line-height: inherit;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
@@ -536,7 +540,7 @@
   color: var(--text-muted);
   padding: 12px 20px;
   min-height: 44px;
-  font-size: clamp(1.08rem, 1.24vw, 1.22rem);
+  font-size: var(--project-pill-font);
   font-weight: 700;
   line-height: 1.3;
   cursor: pointer;
@@ -991,6 +995,11 @@
 }
 
 @media (max-width: 1024px) {
+  .work-panel-shell {
+    --project-pill-font: clamp(0.92rem, 1vw, 1rem);
+    --category-pill-font: clamp(1.15rem, 1.24vw, 1.25rem);
+  }
+
   .hero-stage {
     min-height: calc(100svh - var(--header-height) - 160px);
   }
@@ -1124,6 +1133,8 @@
   }
 
   .pillar-selector {
+    --project-pill-font: clamp(0.88rem, 2.1vw, 0.96rem);
+    --category-pill-font: clamp(1.1rem, 2.6vw, 1.2rem);
     padding: var(--space-16) var(--space-10);
     min-height: 84px;
     gap: var(--space-8);
@@ -1131,7 +1142,7 @@
   }
 
   .pillar-tab-label {
-    font-size: inherit;
+    font-size: 1em;
   }
 
   .project-tab {
@@ -1144,7 +1155,7 @@
     min-height: 44px;
     justify-content: center;
     white-space: nowrap;
-    padding-inline: 10px;
+    padding-inline: 8px;
   }
 
   .pillar-tablist {
