@@ -802,6 +802,22 @@ function App() {
         <section id="resume" className="section resume-home" aria-labelledby="resume-home-title" tabIndex={-1}>
           <div className="container resume-home-layout">
             <h2 id="resume-home-title">Resume</h2>
+            <p className="resume-home-copy">
+              View the resume inline on larger screens, or open the PDF/text version directly when that is easier on
+              your device.
+            </p>
+            <ul className="home-link-list resume-link-list" aria-label="Resume links">
+              <li>
+                <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                  Open PDF
+                </a>
+              </li>
+              <li>
+                <a href="/artifacts/SoyonKim_Resume.txt" target="_blank" rel="noopener noreferrer">
+                  Read Text Version
+                </a>
+              </li>
+            </ul>
             <div className="resume-embed-shell">
               <iframe
                 src="/artifacts/SoyonKim_Resume.pdf"

@@ -643,6 +643,7 @@
   font-size: clamp(1.26rem, 1.5vw, 1.44rem);
   font-weight: 700;
   line-height: 1.36;
+  text-wrap: balance;
 }
 
 .project-focus-summary {
@@ -951,6 +952,10 @@
   background: #ffffff;
 }
 
+.resume-link-list {
+  margin-top: var(--space-16);
+}
+
 .home-link-list {
   list-style: none;
   display: flex;
@@ -1039,6 +1044,10 @@
     width: min(calc(100% - 2 * var(--space-16)), var(--max-width));
   }
 
+  .section {
+    padding-block: clamp(56px, 8vh, 88px);
+  }
+
   .hero-layout {
     grid-template-columns: 1fr;
     row-gap: var(--space-10);
@@ -1105,6 +1114,8 @@
     border-radius: 12px;
     background: var(--surface);
     z-index: 75;
+    width: min(calc(100vw - 2 * var(--space-16)), 320px);
+    box-shadow: 0 16px 30px rgba(20, 20, 20, 0.12);
   }
 
   .primary-nav.is-open {
@@ -1143,6 +1154,8 @@
 
   .pillar-tab-label {
     font-size: 1em;
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .project-tab {
@@ -1154,7 +1167,7 @@
     width: 100%;
     min-height: 44px;
     justify-content: center;
-    white-space: nowrap;
+    white-space: normal;
     padding-inline: 8px;
   }
 
@@ -1202,6 +1215,37 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    width: min(calc(100% - 2 * var(--space-12)), var(--max-width));
+  }
+
+  .nav-layout {
+    gap: var(--space-8);
+  }
+
+  .brand {
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .brand img {
+    height: calc(var(--header-height) - 38px);
+    max-width: 54px;
+  }
+
+  .brand span {
+    font-size: clamp(1.28rem, 7vw, 1.7rem);
+  }
+
+  .hero-stage {
+    padding-block: var(--space-8) var(--space-16);
+  }
+
+  .hero-copy {
+    gap: var(--space-16);
+    padding-top: 0;
+  }
+
   .hero-copy h1 {
     font-size: clamp(2.4rem, 10vw, 3rem);
   }
@@ -1214,12 +1258,52 @@
     font-size: clamp(1.05rem, 4.6vw, 1.2rem);
   }
 
-  .project-focus-media {
-    width: min(100%, 220px);
+  .hero-portrait {
+    width: min(100%, 320px);
   }
 
-  .resume-embed-shell iframe {
-    min-height: 560px;
+  .pillar-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-tab,
+  .pillar-tab-see-all {
+    justify-content: flex-start;
+    text-align: left;
+    padding-inline: var(--space-12);
+  }
+
+  .project-focus-card,
+  .about-home-layout,
+  .resume-home-layout,
+  .accessibility-home-layout,
+  .contact-home-layout {
+    padding: 14px;
+  }
+
+  .project-focus-media {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-focus-content h3 {
+    font-size: 1.16rem;
+  }
+
+  .project-focus-summary,
+  .meta-line {
+    font-size: 1rem;
+  }
+
+  .about-home-layout p,
+  .resume-home-layout p,
+  .accessibility-home-layout p,
+  .contact-home-layout p {
+    font-size: 0.98rem;
+  }
+
+  .resume-embed-shell {
+    display: none;
   }
 
   .footer-nav a,
