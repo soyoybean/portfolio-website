@@ -4,11 +4,9 @@ import './App.css'
 
 type Theme = 'light' | 'dark'
 type PillarKey = 'robotics' | 'ai' | 'systems'
-type PillarIconKey = 'heart' | 'brain' | 'network'
 
 type Pillar = {
   key: PillarKey
-  icon: PillarIconKey
   title: string
   description: string
 }
@@ -25,27 +23,24 @@ type Project = {
   caseStudyUrl: string
 }
 
-type NavKey = 'home' | 'work' | 'about' | 'contact'
+type NavKey = 'home' | 'work' | 'about' | 'resume' | 'contact'
 
 const THEME_STORAGE_KEY = 'portfolio-theme'
 
 const pillars: Pillar[] = [
   {
     key: 'robotics',
-    icon: 'heart',
     title: 'Assistive Care Robotics',
     description:
       'Designing human-robot interaction that supports dignity, agency, and wellbeing',
   },
   {
     key: 'ai',
-    icon: 'brain',
     title: 'Responsible & Trustworthy AI',
     description: 'Investigating trust, fairness, and accountability in AI systems',
   },
   {
     key: 'systems',
-    icon: 'network',
     title: 'Systems Thinking & Modeling',
     description:
       'Building accessible tools and practices that center marginalized voices',
@@ -60,7 +55,7 @@ const projects: Project[] = [
     subtitle: '**Assistive robotic system for chronic pain relief in long-term wheelchair users**',
     supports: 'Long-term wheelchair users with chronic pain and the caregivers supporting them',
     impact:
-      'Deployed in real-world use **12+ hours daily for 1+ year**, reducing both pain and caregiver burden through co-designed, low-effort interaction.',
+      'Deployed in real-world use **12+ hours daily for more than a year**, reducing both pain and caregiver burden through co-designed, low-effort interaction.',
     thumbnail: '/case-studies/FlowGuard_hero.png',
     caseStudyUrl: '/case-studies/flowguard.html',
   },
@@ -179,9 +174,7 @@ function App() {
     const resolveHashTarget = (hash: string) => {
       const rawId = hash.replace(/^#/, '')
       const aliasMap: Record<string, string> = {
-        work: 'impact-anchor',
-        about: 'about-home-title',
-        contact: 'contact-home-title',
+        top: 'home',
       }
 
       return aliasMap[rawId] ?? rawId
@@ -242,8 +235,9 @@ function App() {
       const homeSection = document.getElementById('home') as HTMLElement | null
       const workSection = document.getElementById('work') as HTMLElement | null
       const aboutSection = document.getElementById('about') as HTMLElement | null
+      const resumeSection = document.getElementById('resume') as HTMLElement | null
       const contactSection = document.getElementById('contact') as HTMLElement | null
-      if (!homeSection || !workSection || !aboutSection || !contactSection) {
+      if (!homeSection || !workSection || !aboutSection || !resumeSection || !contactSection) {
         return
       }
 
@@ -254,6 +248,7 @@ function App() {
         { key: 'home', section: homeSection },
         { key: 'work', section: workSection },
         { key: 'about', section: aboutSection },
+        { key: 'resume', section: resumeSection },
         { key: 'contact', section: contactSection },
       ]
 
@@ -453,10 +448,6 @@ function App() {
 
   return (
     <div className="page-shell" id="top">
-      <a className="skip-link" href="#main-content">
-        Skip to main content
-      </a>
-
       <header className="site-header">
         <div className="container nav-layout">
           <a className="brand" href="#top" aria-label="Return to Home">
@@ -471,57 +462,60 @@ function App() {
               aria-label="Primary"
             >
               <a
-                href="#top"
+                href="#home"
                 className={activeNav === 'home' ? 'is-active' : undefined}
                 aria-current={activeNav === 'home' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
-                  smoothScrollToTarget('top', 'home')
+                  smoothScrollToTarget('home', 'home')
                   closeNav()
                 }}
               >
                 Home
               </a>
               <a
-                href="#impact-anchor"
+                href="#work"
                 className={activeNav === 'work' ? 'is-active' : undefined}
                 aria-current={activeNav === 'work' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
-                  smoothScrollToTarget('impact-anchor', 'work')
+                  smoothScrollToTarget('work', 'work')
                   closeNav()
                 }}
               >
                 Work
               </a>
               <a
-                href="#about-home-title"
+                href="#about"
                 className={activeNav === 'about' ? 'is-active' : undefined}
                 aria-current={activeNav === 'about' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
-                  smoothScrollToTarget('about-home-title', 'about')
+                  smoothScrollToTarget('about', 'about')
                   closeNav()
                 }}
               >
                 About Me
               </a>
               <a
-                href="/artifacts/SoyonKim_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="nav-no-highlight"
-                onClick={closeNav}
+                href="#resume"
+                className={activeNav === 'resume' ? 'is-active' : undefined}
+                aria-current={activeNav === 'resume' ? 'page' : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  smoothScrollToTarget('resume', 'resume')
+                  closeNav()
+                }}
               >
                 Resume
               </a>
               <a
-                href="#contact-home-title"
+                href="#contact"
                 className={activeNav === 'contact' ? 'is-active' : undefined}
                 aria-current={activeNav === 'contact' ? 'page' : undefined}
                 onClick={(event) => {
                   event.preventDefault()
-                  smoothScrollToTarget('contact-home-title', 'contact')
+                  smoothScrollToTarget('contact', 'contact')
                   closeNav()
                 }}
               >
@@ -575,7 +569,7 @@ function App() {
                 </div>
               </div>
               <div className="hero-portrait">
-                <img src="/soyon_portrait.png" alt="Portrait of Soyon Kim" loading="eager" decoding="async" />
+                <img src="/soyon_portrait.png" alt="Portrait of Soyon Kim" decoding="async" />
               </div>
             </div>
           </div>
@@ -601,13 +595,10 @@ function App() {
                         className={`pillar-tab ${selected ? 'is-active' : ''}`}
                         aria-selected={selected}
                         aria-controls="pillar-content-panel"
-                        tabIndex={selected ? 0 : -1}
+                        tabIndex={0}
                         onClick={() => setPillar(pillar.key)}
                         onKeyDown={(event) => onPillarKeyDown(event, pillar.key)}
                       >
-                        <span className="pillar-tab-icon" aria-hidden="true">
-                          <PillarIcon icon={pillar.icon} />
-                        </span>
                         <span className="pillar-tab-label">{pillar.title}</span>
                       </button>
                     )
@@ -629,7 +620,6 @@ function App() {
                   {projectsByPillar.map((group) => (
                     <section key={group.pillar.key} className="all-pillars-group">
                       <p className="pillar-group-title">{group.pillar.title}</p>
-                      <p className="pillar-intro">{group.pillar.description}</p>
                       <div className="project-stack">
                         {group.items.map((project) => (
                           <a
@@ -683,12 +673,6 @@ function App() {
                   role="tabpanel"
                   aria-labelledby={`pillar-tab-${selectedPillarGroup.pillar.key}`}
                 >
-                  <p id="work-pillar-title" className="pillar-group-title">
-                    {selectedPillarGroup.pillar.title}
-                  </p>
-                  <p className="pillar-intro">{selectedPillarGroup.pillar.description}</p>
-                  <p className="project-tab-lead">See projects in this category:</p>
-
                   <div className="project-tabs" role="tablist" aria-label={`${selectedPillarGroup.pillar.title} projects`}>
                     {selectedPillarGroup.items.map((project) => {
                       const isSelected = project.id === selectedProject.id
@@ -701,7 +685,7 @@ function App() {
                           className={`project-tab ${isSelected ? 'is-active' : ''}`}
                           aria-selected={isSelected}
                           aria-controls={`project-panel-${selectedPillarGroup.pillar.key}`}
-                          tabIndex={isSelected ? 0 : -1}
+                          tabIndex={0}
                           onClick={() => selectPillarProject(selectedPillarGroup.pillar.key, project.id)}
                           onKeyDown={(event) => onProjectKeyDown(event, project.id)}
                         >
@@ -815,6 +799,19 @@ function App() {
           </div>
         </section>
 
+        <section id="resume" className="section resume-home" aria-labelledby="resume-home-title" tabIndex={-1}>
+          <div className="container resume-home-layout">
+            <h2 id="resume-home-title">Resume</h2>
+            <div className="resume-embed-shell">
+              <iframe
+                src="/artifacts/SoyonKim_Resume.pdf"
+                title="Soyon Kim Resume"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
         <section id="contact" className="section contact-home" aria-labelledby="contact-home-title" tabIndex={-1}>
           <div className="container contact-home-layout">
             <h2 id="contact-home-title">Contact</h2>
@@ -876,12 +873,10 @@ function App() {
           </p>
 
           <nav className="footer-nav" aria-label="Footer navigation">
-            <a href="#top">Home</a>
-            <a href="#impact-anchor">Work</a>
+            <a href="#home">Home</a>
+            <a href="#work">Work</a>
             <a href="#about">About Me</a>
-            <a href="/artifacts/SoyonKim_Resume.pdf" target="_blank" rel="noopener noreferrer" className="nav-no-highlight">
-              Resume
-            </a>
+            <a href="#resume">Resume</a>
             <a href="#contact">Contact</a>
           </nav>
 
@@ -910,38 +905,6 @@ function App() {
         </div>
       </footer>
     </div>
-  )
-}
-
-type PillarIconProps = {
-  icon: PillarIconKey
-}
-
-function PillarIcon({ icon }: PillarIconProps) {
-  if (icon === 'heart') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 20s-7-4.8-7-10a4.1 4.1 0 0 1 7-2.8A4.1 4.1 0 0 1 19 10c0 5.2-7 10-7 10Z" />
-      </svg>
-    )
-  }
-
-  if (icon === 'brain') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M9 4.5a3 3 0 0 0-4.6 2.6A3 3 0 0 0 5 13a3 3 0 0 0 3 5h2M15 4.5a3 3 0 0 1 4.6 2.6A3 3 0 0 1 19 13a3 3 0 0 1-3 5h-2" />
-        <path d="M12 4v16M9.4 8.2c1.1.1 1.8.7 2.6 1.8M14.6 8.2c-1.1.1-1.8.7-2.6 1.8M9.6 14.6c1 .1 1.7.6 2.4 1.6M14.4 14.6c-1 .1-1.7.6-2.4 1.6" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="10" y="3" width="4" height="4" rx="1" />
-      <rect x="4" y="15" width="4" height="4" rx="1" />
-      <rect x="16" y="15" width="4" height="4" rx="1" />
-      <path d="M12 7v4M6 15v-2h12v2" />
-    </svg>
   )
 }
 

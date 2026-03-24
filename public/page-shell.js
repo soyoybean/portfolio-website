@@ -73,10 +73,6 @@
         return 'home'
       }
 
-      if (path.includes('/case-studies/')) {
-        return 'work'
-      }
-
       return ''
     }
 
@@ -121,7 +117,6 @@
 
     const sectionNavLinks = Array.from(document.querySelectorAll('.case-section-nav a[href^="#"]'))
     const siteHeader = document.querySelector('.site-header')
-    const caseHeader = document.querySelector('.case-header')
     const prefersReducedMotion =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches

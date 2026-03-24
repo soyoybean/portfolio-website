@@ -233,6 +233,7 @@ main {
   color: var(--text-muted);
   font-size: clamp(1.08rem, 1.5vw, 1.3rem);
   overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 .case-proofline {
@@ -280,6 +281,7 @@ main {
     background-color 170ms ease,
     border-color 170ms ease,
     color 170ms ease;
+  text-wrap: pretty;
 }
 
 .case-project-link:hover,
@@ -471,7 +473,6 @@ main {
 }
 
 .case-intro {
-  border-bottom: 1px solid var(--border);
   background: var(--surface);
   padding: var(--space-24);
   min-width: 0;
@@ -596,10 +597,6 @@ main {
   border-radius: 0;
   background: transparent;
   padding: var(--space-24);
-}
-
-.case-section + .case-section {
-  border-top: 1px solid var(--border);
 }
 
 .case-micro-blocks {
@@ -843,6 +840,12 @@ main {
   display: block;
 }
 
+.case-media-caption {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
 .case-section-media video,
 .case-inline-media video {
   background: #000;
@@ -882,6 +885,7 @@ main {
   font-size: 0.93rem;
   line-height: 1.35;
   padding: 8px 12px;
+  text-wrap: pretty;
 }
 
 .case-section-nav a:hover,
@@ -899,6 +903,7 @@ main {
   margin: 0;
   font-size: clamp(1.4rem, 2vw, 1.9rem);
   scroll-margin-top: calc(var(--header-height) + 16px);
+  text-wrap: balance;
 }
 
 .case-section p {
@@ -1068,6 +1073,15 @@ main {
 
 .case-study-flowguard .case-bullet-list {
   padding-left: 1.2rem;
+}
+
+.case-study-flowguard .case-bullet-list-nested {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.case-study-flowguard .case-bullet-list-nested > li {
+  margin-top: 0;
 }
 
 .case-study-flowguard .case-bullet-list li + li {
@@ -1638,6 +1652,13 @@ main {
   color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.55;
+}
+
+.case-study-artists .case-embed-fallback a,
+.case-study-healthcare .case-embed-fallback a {
+  color: var(--text);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 
 .case-study-artists .case-summary-overview {
