@@ -1,6 +1,53 @@
-Soyon Kim Resume Placeholder
+Soyon Kim
+LinkedIn: https://www.linkedin.com/in/soyon-kim/
+Website: http://soyonkim.com
 
-Replace this file with your finalized PDF resume at:
-/public/artifacts/SoyonKim_Resume.pdf
+EDUCATION
+Carnegie Mellon University, Pittsburgh, PA | August 2025 - August 2026
+- Pursuing a Master of Human-Computer Interaction at the School of Computer Science's Human-Computer Interaction Institute
 
-Then update src/App.tsx to point the Download Resume button to the PDF path.
+University of California, San Diego, San Diego, CA | June 2024
+- Bachelor of Science - Major in Mathematics-Computer Science and minor in Interdisciplinary Computing and the Arts Major (ICAM)
+- Honors: Provost Honors, GPA: 3.81/4.00, Roosevelt College Honors Program
+
+RESEARCH EXPERIENCES
+The Healthcare Robotics Lab at UCSD | September 2020 - August 2025
+Undergraduate Researcher (Supervisor: Professor Laurel D. Riek)
+- Designing and developing robots that provide personalized neurorehabilitation for people with mild cognitive impairment
+
+Smart Sensing for Humans Lab at Carnegie Mellon University's School of Computer Science | May - August 2022
+Undergraduate Researcher (Supervisor: Professor Mayank Goel)
+- Leading a play-based co-design workshop to develop biosensing companion robots with and for Children with Autism Spectrum Disorder, inspired by tabletop role-playing games such as Dungeons and Dragons
+
+TECHNICAL SKILLS
+Java, C/C++, Python, Arduino & hardware design, Human-centered participatory design, UI/UX Design, Figma, Photoshop/Procreate
+
+PUBLICATIONS
+- Kim, S., Bouzida, A., Kubota, A., and Riek, L. D. Anonymized for review. ACM/IEEE CHI Conference on Human Factors in Computing Systems. In Prep.
+- S. Jayaraman, P. Ghosh, S. Kim, S. Satyadharma, A. Taylor, C. Coyne, and L. D. Riek. (2026). Anonymized for review. ACM/IEEE International Conference on Human Robot Interaction (HRI). [Acceptance Rate: 23.2%] PDF: https://dl.acm.org/doi/10.1145/3757279.3785632
+- Cruz-Sandoval, D., Kubota, A., Kim, S., Twamley, E., and Riek, L. D. (2025). Robot Characters: Co-Designing Dynamic Personalities for Cognitively Assistive Robots. ACM Transactions on Human Robot Interaction (THRI). PDF: https://dl.acm.org/doi/full/10.1145/3778867
+- Kubota, A., Cruz-Sandoval, D., Pei, R., Sun, E., Kim, S., and Riek, L. D. (2023). "Get SMART: Collaborative Goal Setting with Cognitively Assistive Robots." In Proceedings of the 18th Annual ACM/IEEE Conference on Human Robot Interaction (HRI). [Acceptance rate: 25%] PDF: https://dl.acm.org/doi/10.1145/3568162.3576993
+- Kubota, A., Cruz-Sandoval, D., Kim, S., Twamley, E., and Riek, L. D. (2022). "Cognitively Assistive Robots at Home: HRI Design Patterns for Translational Science." In Proceedings of the 17th Annual ACM/IEEE Conference on Human Robot Interaction (HRI). [Acceptance rate: 24.8%] [Best Design Paper Award Honorable Mention] PDF: https://dl.acm.org/doi/abs/10.5555/3523760.3523771
+- Taylor, A., Murakami, M., Kim, S., Chu, R., and Riek, L. D. "Hospitals of the Future, Designing Interactive Systems for Frontline Workers." Computer Supported Cooperative Work (CSCW), 2022. [Acceptance Rate: <30%] PDF: https://dl.acm.org/doi/abs/10.1145/3555543 | Design Catalog: https://heyzine.com/flip-book/c5280437fa.html
+- Kubota, A., Pourbadi, M., Banh, S., Kim, S., and Riek, L. D. "Somebody That I Used to Know: The Risks of Personalizing Robots for Dementia Care." In Proceedings of We Robot, 2021. [Acceptance Rate: 15%] PDF: https://cseweb.ucsd.edu/~akubota/files/WeRobot2021_kubota.pdf
+
+HONORS AND AWARDS
+Design & Research
+- Research Experiences for Undergraduates (REU) recipient, National Science Foundation (NSF) (2021, 2022, 2024)
+- Best Design Paper Award Honorable Mention, Annual ACM/IEEE Conference on Human Robot Interaction (2022)
+- Triton Research & Experiential Learning Scholar (TRELS) recipient, Council of Provosts of UCSD (2021)
+- Best App Design Award recipient, CodePath iOS Development Competition (2020): Created a mobile app. Figma Prototype: https://www.figma.com/proto/6eg0nPyFuuAe1b6IqA7TI8/CodePath-Design-Collab?node-id=64%3A135&scaling=min-zoom
+- Honorable Mention, Spectra Hackathon 4.0 (2020): Designed a web and mobile app. Devpost: https://devpost.com/software/universekitty
+- 1st Place recipient, IEEE UC San Diego Quarterly Projects 2019 Fall Quarter (2019). Product Documentation: https://drive.google.com/file/d/1fsV0Zx-mmrV0DoZOX229FR3N0pNr_SBr/view?usp=sharing
+
+LEADERSHIP AND SOCIAL SERVICES
+Positive Development (2022 - 2024)
+Bilingual (Korean and English) Developmental Client Coach
+- Supported children on the autism spectrum through developmental play therapy with a multidisciplinary therapy team
+
+IEEE UCSD Branch (2019 - 2022)
+Outreach Chair
+- Organized workshops for Python, Computing Arts, 3D printing, and Robotics for underrepresented K-12 students
+
+ADDITIONAL INFORMATION
+Languages: Korean and English (fluent in both languages)
