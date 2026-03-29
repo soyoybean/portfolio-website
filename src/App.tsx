@@ -832,29 +832,17 @@ function App() {
           <div className="container contact-home-layout">
             <h2 id="contact-home-title">Contact</h2>
             <p>
-              For any questions, thoughts, or feedback, reach out via any of the following:
+              For any questions, thoughts, or feedback, reach out on LinkedIn or by email.
             </p>
-            <ul className="social-list" aria-label="Contact links">
+            <ul className="home-link-list" aria-label="Contact links">
               <li>
                 <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer">
-                  <FooterIcon type="linkedin" />
-                  <span>LinkedIn</span>
+                  LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer">
-                  <FooterIcon type="github" />
-                  <span>GitHub</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FooterIcon type="scholar" />
-                  <span>Google Scholar</span>
+                <a href="mailto:soyonkim00@gmail.com">
+                  Email
                 </a>
               </li>
             </ul>
@@ -887,37 +875,6 @@ function App() {
           <p id="footer-quote" className="footer-quote">
             &quot;Despite everything, it&apos;s still you.&quot;
           </p>
-
-          <nav className="footer-nav" aria-label="Footer navigation">
-            <a href="#home">Home</a>
-            <a href="#work">Work</a>
-            <a href="#about">About Me</a>
-            <a href="#resume">Resume</a>
-            <a href="#contact">Contact</a>
-          </nav>
-
-          <ul className="footer-social" aria-label="External links">
-            <li>
-              <a href="https://www.linkedin.com/in/soyon-kim/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <FooterIcon type="linkedin" />
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/soyoybean" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <FooterIcon type="github" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://scholar.google.com/citations?user=l3XDvJgAAAAJ&hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Google Scholar"
-              >
-                <FooterIcon type="scholar" />
-              </a>
-            </li>
-          </ul>
         </div>
       </footer>
     </div>
@@ -926,10 +883,6 @@ function App() {
 
 type MetaIconProps = {
   type: 'supports' | 'impact'
-}
-
-type FooterIconProps = {
-  type: 'linkedin' | 'github' | 'scholar'
 }
 
 function MetaIcon({ type }: MetaIconProps) {
@@ -948,31 +901,6 @@ function MetaIcon({ type }: MetaIconProps) {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="m4 16 5-5 4 4 7-7" />
       <path d="M16 8h4v4" />
-    </svg>
-  )
-}
-
-function FooterIcon({ type }: FooterIconProps) {
-  if (type === 'linkedin') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7 9v8M7 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11 17V9h3v1.6c.5-1 1.5-1.8 3-1.8 2.3 0 3 1.6 3 3.8V17" />
-      </svg>
-    )
-  }
-
-  if (type === 'github') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M9 18c-4 .8-4-2-6-2m12 4v-3.1a2.7 2.7 0 0 0-.8-2.1c2.6-.3 5.3-1.3 5.3-6a4.7 4.7 0 0 0-1.3-3.3 4.4 4.4 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.8 11.8 0 0 0-6.2 0C6 2 5 2.3 5 2.3a4.4 4.4 0 0 0-.1 3.2A4.7 4.7 0 0 0 3.6 8.8c0 4.7 2.7 5.7 5.3 6a2.7 2.7 0 0 0-.8 2.1V20" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M8.8 14.7c1.1 1.5 2.6 2.3 3.2 2.6M8.2 9.8h7.6M9.5 12h5.4M13.5 6.5c1.3 2 2 4 2 5.5s-.7 3.5-2 5.5" />
     </svg>
   )
 }
