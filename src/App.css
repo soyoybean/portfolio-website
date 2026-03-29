@@ -172,8 +172,7 @@
   align-items: center;
   justify-content: center;
   transition:
-    background-color 170ms ease,
-    color 170ms ease;
+    background-color 170ms ease;
 }
 
 .primary-nav a:hover {
@@ -459,8 +458,7 @@
     background-color 170ms ease,
     border-color 170ms ease,
     box-shadow 170ms ease,
-    transform 170ms ease,
-    color 170ms ease;
+    transform 170ms ease;
 }
 
 .pillar-group-title {
